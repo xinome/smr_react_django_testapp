@@ -11,35 +11,62 @@ const BaseApp = () => {
 
   // const isLoggedIn = false;
 
+
   // JSONデータを取得する
-  const [ProjectList, setProjectList] = useState([]);
-  const [PortfolioList, setPortfolioList] = useState([]);
-  const [ActivityList, setActivityList] = useState([]);
+  const [projectList, setProjectList] = useState([]);
+  const [portfolioList, setPortfolioList] = useState([]);
+  const [activityList, setActivityList] = useState([]);
 
   // useEffect(() => {
-  //   const json = require('./data/ProjectList.json');
-  //   setProjectList(json);
-  // }, []);
+  //   fetch('./data/project.json')
+  //   .then(response => {
+  //     return response.json();
+  //   })
+  //   .then(jsondata => console.log(jsondata));
+  // }, [projectList]);
 
   // useEffect(() => {
-  //   const json = require('./data/PortfolioList.json');
-  //   setPortfolioList(json);
-  // }, []);
+  //   fetch('./data/project.json', {
+  //     headers : {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //     }
+  //   })
+  //   .then(response => {
+  //     console.log(response);
+  //     return response.json();
+  //   })
+  //   .then(jsondata => {
+  //     console.log(jsondata);
+  //     setProjectList(jsondata);
+  //   });
+  // }, [projectList]);
 
-  // useEffect(() => {
-  //   const json = require('./data/ActivityList.json');
-  //   setActivityList(json);
-  // }, []);
+  useEffect(() => {
+    const json = require('./data/project.json');
+    // requireではなくfetch
+    setProjectList(json);
+  }, [projectList]);
 
-  // const filteredProjectList = ProjectList.filter((item) => {
-  //   return item.id <= 3;
-  // });
-  // const filteredPortfolioList = PortfolioList.filter((item) => {
-  //   return item.id <= 3;
-  // });
-  // const filteredActivityList = ActivityList.filter((item) => {
-  //   return item.id <= 3;
-  // });
+  useEffect(() => {
+    const json = require('./data/portforio.json');
+    setPortfolioList(json);
+  }, [portfolioList]);
+
+  useEffect(() => {
+    const json = require('./data/activity.json');
+    setActivityList(json);
+  }, [activityList]);
+
+  const filteredProjectList = projectList.filter((item) => {
+    return item.id <= 3;
+  });
+  const filteredPortfolioList = portfolioList.filter((item) => {
+    return item.id <= 3;
+  });
+  const filteredActivityList = activityList.filter((item) => {
+    return item.id <= 3;
+  });
   
   return (
     <div className="app">
@@ -102,12 +129,12 @@ const BaseApp = () => {
                 <dt>2022.10.01</dt>
                 <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
               </dl>
-              {/* {filteredProjectList.map((item) => (
+              {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>[プロジェクト]{item.name}デプロイされました。</dd>
+                  <dd>{item.content}</dd>
                 </dl>
-              ))} */}
+              ))}
             </div>
           </div>
 
@@ -131,6 +158,12 @@ const BaseApp = () => {
                 <dt>2022.10.05</dt>
                 <dd>「ポートフォリオ3」vue.js / vuetify / node.js / bootstrap</dd>
               </dl>
+              {filteredPortfolioList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>{item.content}</dd>
+                </dl>
+              ))}
             </div>
           </div>
 
@@ -154,6 +187,12 @@ const BaseApp = () => {
                 <dt>2022.10.11</dt>
                 <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
               </dl>
+              {filteredActivityList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>{item.content}</dd>
+                </dl>
+              ))}
             </div>
           </div>
 
