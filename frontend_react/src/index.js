@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    {/* ログイン、非ログインで切り分け */}  
+      {/* ログイン、非ログインで切り分け */}  
       <BaseApp />
     </BrowserRouter>
   </React.StrictMode>
