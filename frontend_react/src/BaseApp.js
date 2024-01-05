@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import logo from './logo.svg';
+import Axios from 'axios';
+
 import './BaseApp.css';
 import { Routes, Route, Link } from 'react-router-dom';
 import { bgcolor_header, bgcolor_sidemenu } from './utils/ColorUtils';
@@ -42,21 +44,33 @@ const BaseApp = () => {
   //   });
   // }, [projectList]);
 
-  useEffect(() => {
-    const json = require('./data/project.json');
-    // requireではなくfetch
-    setProjectList(json);
-  }, [projectList]);
-
-  useEffect(() => {
+  // const fetchProjectList = () => {
+  //   const json = require('./data/project.json');
+  //   // requireではなくfetch
+  //   setProjectList(json);
+  // }
+  const fetchPortfolioList = () => {
     const json = require('./data/portforio.json');
     setPortfolioList(json);
-  }, [portfolioList]);
-
-  useEffect(() => {
+  }
+  const fetchActivityList = () => {
     const json = require('./data/activity.json');
     setActivityList(json);
-  }, [activityList]);
+  }
+
+  const fetchData = async () => {
+    const response = await Axios.get("http://localhost:8000/api/data");
+    console.log(response);
+    setProjectList(response.data);
+  }
+
+
+  useEffect(() => {
+    // fetchProjectList();
+    fetchPortfolioList();
+    fetchActivityList();
+    fetchData();
+  }, []);
 
   const filteredProjectList = projectList.filter((item) => {
     return item.id <= 3;
