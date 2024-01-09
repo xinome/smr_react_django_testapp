@@ -23,16 +23,19 @@ const BaseApp = () => {
 
   const fetchProjectList = async () => {
     const response = await Axios.get(`${BASE_API_URL}/project_topics`);
+    console.log(response);
     setProjectList(response.data);
   }
 
   const fetchPortfolioList = async () => {
     const response = await Axios.get("http://localhost:8000/api/portfolio_topics");
+    console.log(response);
     setPortfolioList(response.data);
   }
 
   const fetchActivityList = async () => {
     const response = await Axios.get("http://localhost:8000/api/activity_topics");
+    console.log(response);
     setActivityList(response.data);
   }
 
