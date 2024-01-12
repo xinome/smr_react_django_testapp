@@ -11,9 +11,14 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# テンプレートファイルのディレクトリを指定
+# TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+# STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_app',
     'corsheaders',  # フロントエンドとの通信を許可するために追加
+    'rest_framework',  # REST frameworkを使うために追加
 ]
 
 MIDDLEWARE = [
@@ -54,6 +60,7 @@ MIDDLEWARE = [
 
 # CORSによるフロントエンドとの通信を許可するために追加
 CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
 
