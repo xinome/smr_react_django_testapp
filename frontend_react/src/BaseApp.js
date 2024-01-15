@@ -4,7 +4,10 @@ import Axios from 'axios';
 
 import './BaseApp.css';
 import { Routes, Route, Link } from 'react-router-dom';
-import { bgcolor_header, bgcolor_sidemenu } from './utils/ColorUtils';
+import {
+  bgcolor_header, bgcolor_sidemenu,
+  category_project, category_portfolio, category_activity,
+} from './utils/ColorUtils';
 
 // コンポーネント
 import DashBoardCarousel from './components/DashBoardCarousel';
@@ -69,6 +72,31 @@ const BaseApp = () => {
   const filteredActivityList = activityList.filter((item) => {
     return item.id <= 3;
   });
+
+  const getCategoryTags = (category) => {
+    switch (category) {
+      case 1:
+        return (
+          <span className="tag_category" style={{ backgroundColor: category_project }}>
+            プロジェクト
+          </span>
+        );
+      case 2:
+        return (
+          <span className="tag_category" style={{ backgroundColor: category_portfolio }}>
+            ポートフォリオ
+          </span>
+        );
+      case 3:
+        return (
+          <span className="tag_category" style={{ backgroundColor: category_activity }}>
+            スカウト
+          </span>
+        );
+      default:
+        return "";
+    }
+  };
   
   return (
     <div className="app">
@@ -136,7 +164,10 @@ const BaseApp = () => {
               {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    { getCategoryTags(item.category) }
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
             </div>
@@ -194,7 +225,10 @@ const BaseApp = () => {
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
-                  <dd>{item.content}</dd>
+                  <dd>
+                    { getCategoryTags(item.category) }
+                    {item.content}
+                  </dd>
                 </dl>
               ))}
             </div>

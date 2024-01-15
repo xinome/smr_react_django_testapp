@@ -79,110 +79,129 @@ def project_topics(request):
   # ]
 
   queryset = ProjectTopics.objects.all()
+
+  for ProjectTopic in queryset:
+    print("ProjectTopic: ", ProjectTopic)
+    print("ProjectTopic.id: ", ProjectTopic.id)
+    print("ProjectTopic.date: ", ProjectTopic.date)
+    print("ProjectTopic.content: ", ProjectTopic.content)
+    print("ProjectTopic.category: ", ProjectTopic.category)
+    # print("ProjectTopic.category.id: ", ProjectTopic.category.id)
+    # print("ProjectTopic.category.category_name: ", ProjectTopic.category.category_name)
+    print("ProjectTopic.created_at: ", ProjectTopic.created_at)
+    print("ProjectTopic.updated_at: ", ProjectTopic.updated_at)
+
   serializer_class = ProjectTopicsSerializer(queryset, many=True)
   data = serializer_class.data
 
   return JsonResponse(data, safe=False)
 
 def portfolio_topics(request):
-  data = [
-    {
-      "id": 1,
-      "date": "2022-10-01",
-      "content": "「ポートフォリオ名」html / css / wordpress"
-    },
-    {
-      "id": 2,
-      "date": "2022-10-02",
-      "content": "「ポートフォリオ名」php / laravel / docker"
-    },
-    {
-      "id": 3,
-      "date": "2022-10-03",
-      "content": "「ポートフォリオ名」vue.js / vuetify / node.js / bootstrap"
-    },
-    {
-      "id": 4,
-      "date": "2022-10-04",
-      "content": "「ポートフォリオ名」html / css / wordpress"
-    },
-    {
-      "id": 5,
-      "date": "2022-10-05",
-      "content": "「ポートフォリオ名」php / laravel / docker"
-    },
-    {
-      "id": 6,
-      "date": "2022-10-06",
-      "content": "「ポートフォリオ名」vue.js / vuetify / node.js / bootstrap"
-    },
-    {
-      "id": 7,
-      "date": "2022-10-07",
-      "content": "「ポートフォリオ名」html / css / wordpress"
-    },
-    {
-      "id": 8,
-      "date": "2022-10-08",
-      "content": "「ポートフォリオ名」php / laravel / docker"
-    },
-    {
-      "id": 9,
-      "date": "2022-10-09",
-      "content": "「ポートフォリオ名」vue.js / vuetify / node.js / bootstrap"
-    }
-    
-  ]
+  # data = [
+  #   {
+  #     "id": 1,
+  #     "date": "2022-10-01",
+  #     "content": "「ポートフォリオ名」html / css / wordpress"
+  #   },
+  #   {
+  #     "id": 2,
+  #     "date": "2022-10-02",
+  #     "content": "「ポートフォリオ名」php / laravel / docker"
+  #   },
+  #   {
+  #     "id": 3,
+  #     "date": "2022-10-03",
+  #     "content": "「ポートフォリオ名」vue.js / vuetify / node.js / bootstrap"
+  #   },
+  #   {
+  #     "id": 4,
+  #     "date": "2022-10-04",
+  #     "content": "「ポートフォリオ名」html / css / wordpress"
+  #   },
+  #   {
+  #     "id": 5,
+  #     "date": "2022-10-05",
+  #     "content": "「ポートフォリオ名」php / laravel / docker"
+  #   },
+  #   {
+  #     "id": 6,
+  #     "date": "2022-10-06",
+  #     "content": "「ポートフォリオ名」vue.js / vuetify / node.js / bootstrap"
+  #   },
+  #   {
+  #     "id": 7,
+  #     "date": "2022-10-07",
+  #     "content": "「ポートフォリオ名」html / css / wordpress"
+  #   },
+  #   {
+  #     "id": 8,
+  #     "date": "2022-10-08",
+  #     "content": "「ポートフォリオ名」php / laravel / docker"
+  #   },
+  #   {
+  #     "id": 9,
+  #     "date": "2022-10-09",
+  #     "content": "「ポートフォリオ名」vue.js / vuetify / node.js / bootstrap"
+  #   }
+  # ]
+
+  queryset = PortfolioTopics.objects.all()
+  serializer_class = PortfolioTopicsSerializer(queryset, many=True)
+  data = serializer_class.data
 
   return JsonResponse(data, safe=False)
 
 def activity_topics(request):
-  data = [
-    {
-      "id": 1,
-      "date": "2022-10-01",
-      "content": "[プロジェクト] 「プロジェクト名」デプロイされました。"
-    },
-    {
-      "id": 2,
-      "date": "2022-10-02",
-      "content": "[ポートフォリオ] 「ポートフォリオ名」いいねがつきました。"
-    },
-    {
-      "id": 3,
-      "date": "2022-10-03",
-      "content": "[スカウト] 「社名」からメッセージが届きました。"
-    },
-    {
-      "id": 4,
-      "date": "2022-10-04",
-      "content": "[プロジェクト] 「プロジェクト名」デプロイされました。"
-    },
-    {
-      "id": 5,
-      "date": "2022-10-05",
-      "content": "[ポートフォリオ] 「ポートフォリオ名」いいねがつきました。"
-    },
-    {
-      "id": 6,
-      "date": "2022-10-06",
-      "content": "[スカウト] 「社名」からメッセージが届きました。"
-    },
-    {
-      "id": 7,
-      "date": "2022-10-07",
-      "content": "[プロジェクト] 「プロジェクト名」デプロイされました。"
-    },
-    {
-      "id": 8,
-      "date": "2022-10-08",
-      "content": "[ポートフォリオ] 「ポートフォリオ名」いいねがつきました。"
-    },
-    {
-      "id": 9,
-      "date": "2022-10-09",
-      "content": "[スカウト] 「社名」からメッセージが届きました。"
-    }
-  ]
+  # data = [
+  #   {
+  #     "id": 1,
+  #     "date": "2022-10-01",
+  #     "content": "[プロジェクト] 「プロジェクト名」デプロイされました。"
+  #   },
+  #   {
+  #     "id": 2,
+  #     "date": "2022-10-02",
+  #     "content": "[ポートフォリオ] 「ポートフォリオ名」いいねがつきました。"
+  #   },
+  #   {
+  #     "id": 3,
+  #     "date": "2022-10-03",
+  #     "content": "[スカウト] 「社名」からメッセージが届きました。"
+  #   },
+  #   {
+  #     "id": 4,
+  #     "date": "2022-10-04",
+  #     "content": "[プロジェクト] 「プロジェクト名」デプロイされました。"
+  #   },
+  #   {
+  #     "id": 5,
+  #     "date": "2022-10-05",
+  #     "content": "[ポートフォリオ] 「ポートフォリオ名」いいねがつきました。"
+  #   },
+  #   {
+  #     "id": 6,
+  #     "date": "2022-10-06",
+  #     "content": "[スカウト] 「社名」からメッセージが届きました。"
+  #   },
+  #   {
+  #     "id": 7,
+  #     "date": "2022-10-07",
+  #     "content": "[プロジェクト] 「プロジェクト名」デプロイされました。"
+  #   },
+  #   {
+  #     "id": 8,
+  #     "date": "2022-10-08",
+  #     "content": "[ポートフォリオ] 「ポートフォリオ名」いいねがつきました。"
+  #   },
+  #   {
+  #     "id": 9,
+  #     "date": "2022-10-09",
+  #     "content": "[スカウト] 「社名」からメッセージが届きました。"
+  #   }
+  # ]
+
+  queryset = ActivityTopics.objects.all()
+  serializer_class = ActivityTopicsSerializer(queryset, many=True)
+  data = serializer_class.data
 
   return JsonResponse(data, safe=False)
