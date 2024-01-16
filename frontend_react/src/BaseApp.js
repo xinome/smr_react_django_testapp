@@ -73,28 +73,16 @@ const BaseApp = () => {
     return item.id <= 3;
   });
 
-  const getCategoryTags = (category) => {
-    switch (category) {
+  const getCategoryTags = (category_id) => {
+    switch (category_id) {
       case 1:
-        return (
-          <span className="tag_category" style={{ backgroundColor: category_project }}>
-            プロジェクト
-          </span>
-        );
+        return category_project;
       case 2:
-        return (
-          <span className="tag_category" style={{ backgroundColor: category_portfolio }}>
-            ポートフォリオ
-          </span>
-        );
+        return category_portfolio;
       case 3:
-        return (
-          <span className="tag_category" style={{ backgroundColor: category_activity }}>
-            スカウト
-          </span>
-        );
+        return category_activity;
       default:
-        return "";
+        return null;
     }
   };
   
@@ -165,7 +153,9 @@ const BaseApp = () => {
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
                   <dd>
-                    { getCategoryTags(item.category) }
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                      {item.category.category_name}
+                    </span>
                     {item.content}
                   </dd>
                 </dl>
@@ -226,7 +216,9 @@ const BaseApp = () => {
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
                   <dd>
-                    { getCategoryTags(item.category) }
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                      {item.category.category_name}
+                    </span>
                     {item.content}
                   </dd>
                 </dl>
