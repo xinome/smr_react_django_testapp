@@ -54,6 +54,14 @@ a:hover {
   /* background-color: greenyellow; */
 }
 
+.side-menu a {
+  color: white;
+}
+
+.side-menu a:hover {
+  text-decoration: none;
+}
+
 .side-menu ul {
   list-style: none;
   padding: 0;
