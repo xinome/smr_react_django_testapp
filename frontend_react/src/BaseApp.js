@@ -14,12 +14,9 @@ import {
 import { Avatar, Box, Container, Grid } from '@mui/material';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { List, ListItemText, ListItemButton, Collapse } from "@mui/material";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+
 
 import { createTheme } from '@mui/material/styles';
 
@@ -103,62 +100,14 @@ const BaseApp = () => {
     }
   };
 
-  const menuAccordionStyle = {
-    backgroundColor: bgcolor_sidemenu,
-    color: '#fff',
-    padding: '.5em',
-    borderRadius: '0',
-    borderBottom: '1px solid #ccc',
-    boxShadow: 'none',
-  };
-
   const menuItemStyle = {
     padding: '.5em 1em',
     margin: '0',
     borderBottom: '1px solid #ccc',
   };
 
-  const menuNestedItemStyle = {
-    padding: '.5em 1em',
-    margin: '0',
-    borderBottom: '1px solid #ccc',
-  };
-
-  const themeAccordion = createTheme({
-    components: {
-      MuiAccordion: {
-        styleOverrides: {
-          root: {
-            '&.MuiAccordion-root': {
-              padding: '0',
-            },
-            '&.MuiAccordion-root.Mui-expanded': {
-              margin: '0px',
-              borderBottom: 'none',
-            },
-          },
-        },
-      },
-      // MuiAccordionSummary: {
-      //   styleOverrides: {
-      //     root: {
-      //       '&.MuiAccordionSummary-root': {
-      //         margin: '0',
-      //       },
-      //     },
-      //   },
-      // },
-      // MuiAccordionDetails: {
-      //   styleOverrides: {
-      //     root: {
-      //       '&.MuiAccordionDetails-root': {
-      //         padding: '0',
-      //       },
-      //     },
-      //   },
-      // },
-    },
-  });
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   
   return (
     <div className="app">
@@ -184,7 +133,7 @@ const BaseApp = () => {
       <BaseHeader />
       <Box className='app-container'>
         <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
-          <ul>
+          <List>
             {/* <li>
               ポートフォリオ
               <ul>
@@ -192,58 +141,64 @@ const BaseApp = () => {
                 <li>ポートフォリオ作成</li>
               </ul>
             </li> */}
-            <Accordion theme={themeAccordion} sx={menuAccordionStyle}>
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
-              >
-                <Typography>ポートフォリオ</Typography>
-              </AccordionSummary>
-              <AccordionDetails sx={{
-                padding: '0',
-                margin: '0',
-              }}>
+            <ListItemButton sx={menuItemStyle} onClick={() => setOpen(!open)}>
+              {/* <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon> */}
+              <ListItemText primary="ポートフォリオ管理" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
                 <Link to='/portfolio/list/'>
-                  <Box sx={menuNestedItemStyle}>ポートフォリオ一覧</Box>
+                  <ListItemButton sx={{ ...menuItemStyle, pl: 4 }}>
+                    <ListItemText primary="ポートフォリオ一覧" />
+                  </ListItemButton>
                 </Link>
                 <Link to='/portfolio/create/'>
-                  <Box sx={menuNestedItemStyle}>ポートフォリオ作成</Box>
+                  <ListItemButton sx={{ ...menuItemStyle, pl: 4 }}>
+                    <ListItemText primary="ポートフォリオ作成" />
+                  </ListItemButton>
                 </Link>
-              </AccordionDetails>
-            </Accordion>
+              </List>
+            </Collapse>
+
             <Link to='/mypage/edit/'>
-              <Box sx={menuItemStyle}>ユーザ基本情報変更</Box>
+              <ListItemButton sx={menuItemStyle}>ユーザ基本情報変更</ListItemButton>
             </Link>
-            <Accordion theme={themeAccordion} sx={menuAccordionStyle}>
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon sx={{ color: '#fff' }} />}
-              >
-                <Typography>プロジェクト管理</Typography>
-              </AccordionSummary>
-              <AccordionDetails sx={{
-                padding: '0',
-                margin: '0',
-              }}>
+
+            <ListItemButton sx={menuItemStyle} onClick={() => setOpen2(!open2)}>
+              <ListItemText primary="プロジェクト管理" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={open2} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
                 <Link to='/project/list/'>
-                  <Box sx={menuItemStyle}>プロジェクト一覧</Box>
+                  <ListItemButton sx={{ ...menuItemStyle, pl: 4 }}>
+                    <ListItemText primary="プロジェクト一覧" />
+                  </ListItemButton>
                 </Link>
-                <Link to='/project/list/'>
-                  <Box sx={menuItemStyle}>プロジェクト作成</Box>
+                <Link to='/project/create/'>
+                  <ListItemButton sx={{ ...menuItemStyle, pl: 4 }}>
+                    <ListItemText primary="プロジェクト作成" />
+                  </ListItemButton>
                 </Link>
-              </AccordionDetails>
-            </Accordion>
+              </List>
+            </Collapse>
+
             <Link to='/searchproject/'>
-              <Box sx={menuItemStyle}>プロジェクト検索</Box>
+              <ListItemButton sx={menuItemStyle}>プロジェクト検索</ListItemButton>
             </Link>
             <Link to='/scout/'>
-              <Box sx={menuItemStyle}>スカウト管理</Box>
+              <ListItemButton sx={menuItemStyle}>スカウト管理</ListItemButton>
             </Link>
             <Link to='/tips/'>
-              <Box sx={menuItemStyle}>開発Tips</Box>
+              <ListItemButton sx={menuItemStyle}>開発Tips</ListItemButton>
             </Link>
             <Link to='/activity/'>
-              <Box sx={menuItemStyle}>活動記録</Box>
+              <ListItemButton sx={menuItemStyle}>活動記録</ListItemButton>
             </Link>
-          </ul>
+          </List>
         </Box>
 
         {/* <Routes>
