@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 import './BaseApp.css';
 import { Routes, Route, Link } from 'react-router-dom';
+
 import {
   bgcolor_header, bgcolor_sidemenu,
   category_project, category_portfolio, category_activity,
@@ -23,7 +24,12 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { createTheme } from '@mui/material/styles';
 
 // コンポーネント
+import BaseHeader from "./components/BaseHeader";
+import BaseSideMenu from "./components/BaseSideMenu";
 import DashBoardCarousel from './components/DashBoardCarousel';
+
+// ページ
+import DashBoard from './pages/DashBoard';
 
 const BaseApp = () => {
 
@@ -156,13 +162,12 @@ const BaseApp = () => {
   
   return (
     <div className="app">
-      <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
+      {/* <header className="app-header" style={{ backgroundColor: bgcolor_header }}>
         <Box className='header-logo'>
           <Link to='/'>ロゴ</Link>
         </Box>
         <Grid container className='header-menu' sx={{ alignItems: 'center' }}>
           <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
-            {/* アカウント画像アイコン */}
             <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
           </Grid>
           <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
@@ -175,7 +180,8 @@ const BaseApp = () => {
             <Link to='/logout'>ログアウト</Link>
           </Grid>
         </Grid>
-      </header>
+      </header> */}
+      <BaseHeader />
       <Box className='app-container'>
         <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <ul>
@@ -239,6 +245,11 @@ const BaseApp = () => {
             </Link>
           </ul>
         </Box>
+
+        {/* <Routes>
+          <Route path="/dashboard/" element={<DashBoard />} /> 
+        </Routes> */}
+
         <Container className='page-maincontents'>
           {/* カルーセル */}
           <Container className='dashboard-carousel section-wrapper'>
