@@ -169,7 +169,7 @@ const BaseApp = () => {
 
             <ListItemButton sx={menuItemStyle} onClick={() => setOpen2(!open2)}>
               <ListItemText primary="プロジェクト管理" />
-              {open ? <ExpandLess /> : <ExpandMore />}
+              {open2 ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open2} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
