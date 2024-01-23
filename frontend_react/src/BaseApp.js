@@ -27,6 +27,7 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 
 // ページ
 import DashBoard from './pages/DashBoard';
+import Mypage from './pages/Mypage';
 
 const BaseApp = () => {
 
@@ -201,36 +202,24 @@ const BaseApp = () => {
           </List>
         </Box>
 
-        {/* <Routes>
+        <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
-        </Routes> */}
+          <Route path="/mypage/" element={<Mypage user_id={1} />} />
+        </Routes>
 
-        <Container className='page-maincontents'>
-          {/* カルーセル */}
+        {/* <Container className='page-maincontents'>
           <Container className='dashboard-carousel section-wrapper'>
             <DashBoardCarousel />
           </Container>
 
           <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
+            <Grid container className='section-header'>
               <Grid item className='section-wrapper-title'>参加プロジェクト</Grid>
               <Grid item>
                 <Link to='/project/list'>詳細を見る</Link>
               </Grid>
             </Grid>
-            <Box className='section-wrapper-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl> */}
+            <Box className='section-contents'>
               {filteredProjectList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -246,25 +235,13 @@ const BaseApp = () => {
           </Box>
 
           <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
+            <Grid container className='section-header'>
               <Grid item className='section-wrapper-title'>ポートフォリオ</Grid>
               <Grid item>
                 <Link to='/portfolio/list'>詳細を見る</Link>
               </Grid>
             </Grid>
-            <Box className='section-wrapper-contents'>
-              {/* <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ1」html / css / wordpress</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ2」php / laravel / docker</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>「ポートフォリオ3」vue.js / vuetify / node.js / bootstrap</dd>
-              </dl> */}
+            <Box className='section-contents'>
               {filteredPortfolioList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -275,25 +252,13 @@ const BaseApp = () => {
           </Box>
 
           <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
+            <Grid container className='section-header'>
               <Grid item className='section-wrapper-title'>活動記録</Grid>
               <Grid item>
                 <Link to='/activity'>詳細を見る</Link>
               </Grid>
             </Grid>
-            <Box className='section-wrapper-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.05</dt>
-                <dd>[ポートフォリオ]「ポートフォリオ名2」いいねがつきました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.11</dt>
-                <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
-              </dl> */}
+            <Box className='section-contents'>
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -309,13 +274,13 @@ const BaseApp = () => {
           </Box>
 
           <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
+            <Grid container className='section-header'>
               <Grid item className='section-wrapper-title'>活動記録</Grid>
               <Grid item>
                 <Link to='/activity'>詳細を見る</Link>
               </Grid>
             </Grid>
-            <Box className='section-wrapper-contents'>
+            <Box className='section-contents'>
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -330,13 +295,13 @@ const BaseApp = () => {
             </Box>
           </Box>
           <Box className='section-wrapper'>
-            <Grid container className='section-wrapper-header'>
+            <Grid container className='section-header'>
               <Grid item className='section-wrapper-title'>活動記録</Grid>
               <Grid item>
                 <Link to='/activity'>詳細を見る</Link>
               </Grid>
             </Grid>
-            <Box className='section-wrapper-contents'>
+            <Box className='section-contents'>
               {filteredActivityList.map((item) => (
                 <dl key={item.id}>
                   <dt>{item.date}</dt>
@@ -351,7 +316,7 @@ const BaseApp = () => {
             </Box>
           </Box>
 
-        </Container>
+        </Container> */}
       </Box>
     </div>
   );

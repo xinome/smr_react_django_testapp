@@ -88,13 +88,13 @@ const DashBoard = () => {
       </Container>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid item className='section-wrapper-title'>参加プロジェクト</Grid>
+        <Grid container className='section-header'>
+          <Grid item className='section-title'>参加プロジェクト</Grid>
           <Grid item>
             <Link to='/project/list'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {/* <dl>
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
@@ -122,13 +122,13 @@ const DashBoard = () => {
       </Box>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid item className='section-wrapper-title'>ポートフォリオ</Grid>
+        <Grid container className='section-header'>
+          <Grid item className='section-title'>ポートフォリオ</Grid>
           <Grid item>
             <Link to='/portfolio/list'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {/* <dl>
             <dt>2022.10.05</dt>
             <dd>「ポートフォリオ1」html / css / wordpress</dd>
@@ -151,13 +151,13 @@ const DashBoard = () => {
       </Box>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid item className='section-wrapper-title'>活動記録</Grid>
+        <Grid container className='section-header'>
+          <Grid item className='section-title'>活動記録</Grid>
           <Grid item>
             <Link to='/activity'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {/* <dl>
             <dt>2022.10.01</dt>
             <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
@@ -185,13 +185,13 @@ const DashBoard = () => {
       </Box>
 
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid item className='section-wrapper-title'>活動記録</Grid>
+        <Grid container className='section-header'>
+          <Grid item className='section-title'>活動記録</Grid>
           <Grid item>
             <Link to='/activity'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {filteredActivityList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
@@ -206,13 +206,13 @@ const DashBoard = () => {
         </Box>
       </Box>
       <Box className='section-wrapper'>
-        <Grid container className='section-wrapper-header'>
-          <Grid item className='section-wrapper-title'>活動記録</Grid>
+        <Grid container className='section-header'>
+          <Grid item className='section-title'>活動記録</Grid>
           <Grid item>
             <Link to='/activity'>詳細を見る</Link>
           </Grid>
         </Grid>
-        <Box className='section-wrapper-contents'>
+        <Box className='section-contents'>
           {filteredActivityList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
