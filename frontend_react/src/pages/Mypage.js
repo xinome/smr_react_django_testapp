@@ -2,55 +2,56 @@ import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Box, Container, Grid, Typography, Breadcrumbs, Button, Table } from '@mui/material'
 import { TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
+import { fetchAccountList, getAccountList } from '../features/mypage/mypageSlice'
+
 const Mypage = (props) => {
 
   const user_id = props.user_id;
   console.log("Mypage: user_id: ", user_id);
 
-  // const BASE_API_URL = "http://localhost:8000/api";
   // テスト用: JSONPlaceholderを使用
-  const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+  // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
   // JSONデータを取得する
-  const [postsList, setPostsList] = useState([]);
-  const [usersList, setUsersList] = useState([]);
+  // const [usersList, setUsersList] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchUsersList = async (id) => {
+  //     try {
+  //       const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
+  //       console.log("fetchUsersList: ", response);
+  //       setUsersList(response.data);
+  //       console.log("fetchUsersList: usersList: ", usersList);
+  //     }
+  //     catch (error) {
+  //       console.log("fetchUsersList: ", error);
+  //     }
+  //   }
+
+  //   fetchUsersList(user_id);
+  // }, []);
+
+  // const itemsAccount = useSelector(getAccountList);
+  const itemsAccount = useSelector((state) => state.accountReducer.items);
+  const dispatch = useDispatch();
+
+  // console.log("state: ", useSelector((state) => state));
+  // console.log("state: ", store.getState());
 
   useEffect(() => {
-    const fetchPostsList = async () => {
-      try {
-        const response = await Axios.get(`${BASE_API_URL}/posts`);
-        console.log("fetchPostsList: ", response);
-        setPostsList(response.data);
-        console.log("fetchPostsList: postsList: ", postsList);
-      }
-      catch (error) {
-        console.log("fetchPostsList: ", error);
-      }
-    }
+    dispatch(fetchAccountList(user_id));
+  }, [dispatch, user_id]);
 
-    fetchPostsList();
-
-    const fetchUsersList = async (id) => {
-      try {
-        const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-        console.log("fetchUsersList: ", response);
-        setUsersList(response.data);
-        console.log("fetchUsersList: usersList: ", usersList);
-      }
-      catch (error) {
-        console.log("fetchUsersList: ", error);
-      }
-    }
-
-    fetchUsersList(user_id);
-  }, []);
+  // const usersList = itemsAccount.payload.accountReducer.items;
+  console.log("Mypage: itemsAccount: ", itemsAccount);
+  const usersList = itemsAccount;
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },

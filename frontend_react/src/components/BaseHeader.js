@@ -32,7 +32,7 @@ const BaseHeader = (props) => {
         fetch(`${BASE_API_URL}/users/${id}`)
           .then((response) => response.json())
           .then((data) => {
-            store.dispatch({ type: 'FETCH_USERS_LIST', payload: data })
+            // store.dispatch({ type: 'FETCH_USERS_LIST', payload: data })
             console.log("store: ", store.getState());
             setUsersList(data);
           });
