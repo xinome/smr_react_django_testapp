@@ -7,7 +7,6 @@ import { Box, Container, Grid, Typography, Breadcrumbs, Button, Table } from '@m
 import { TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
 const Mypage = (props) => {

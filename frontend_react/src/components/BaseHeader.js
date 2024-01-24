@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
+// import Axios from 'axios';
 import { Box, Grid, Avatar } from '@mui/material';
 
 import { bgcolor_header } from '../utils/ColorUtils';
 import { deepPurple } from '@mui/material/colors';
+
+import store from '../store';
 
 
 const BaseHeader = (props) => {
@@ -17,30 +19,23 @@ const BaseHeader = (props) => {
   const BASE_API_URL = "https://jsonplaceholder.typicode.com";
 
   // JSONデータを取得する
-  const [postsList, setPostsList] = useState([]);
   const [usersList, setUsersList] = useState([]);
 
   useEffect(() => {
-    const fetchPostsList = async () => {
-      try {
-        const response = await Axios.get(`${BASE_API_URL}/posts`);
-        console.log("fetchPostsList: ", response);
-        setPostsList(response.data);
-        console.log("fetchPostsList: postsList: ", postsList);
-      }
-      catch (error) {
-        console.log("fetchPostsList: ", error);
-      }
-    }
-
-    fetchPostsList();
-
     const fetchUsersList = async (id) => {
       try {
-        const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-        console.log("fetchUsersList: ", response);
-        setUsersList(response.data);
-        console.log("fetchUsersList: usersList: ", usersList);
+        // const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
+        // console.log("fetchUsersList: ", response);
+        // setUsersList(response.data);
+        // console.log("fetchUsersList > usersList: ", usersList);
+
+        fetch(`${BASE_API_URL}/users/${id}`)
+          .then((response) => response.json())
+          .then((data) => {
+            store.dispatch({ type: 'FETCH_USERS_LIST', payload: data })
+            console.log("store: ", store.getState());
+            setUsersList(data);
+          });
       }
       catch (error) {
         console.log("fetchUsersList: ", error);
@@ -48,7 +43,7 @@ const BaseHeader = (props) => {
     }
 
     fetchUsersList(user_id);
-  }, []);
+  }, [user_id]);
 
 
   const stringAvater = (name) => {
@@ -72,13 +67,13 @@ const BaseHeader = (props) => {
           <Avatar {...stringAvater(usersList.name)}></Avatar>
         </Grid>
         <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
-          <Link to='/mypage'>マイページ</Link>
+          <Link to='/mypage/'>マイページ</Link>
         </Grid>
         <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
-          <Link to='/password'>パスワード変更</Link>
+          <Link to='/password/'>パスワード変更</Link>
         </Grid>
         <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
-          <Link to='/logout'>ログアウト</Link>
+          <Link to='/logout/'>ログアウト</Link>
         </Grid>
       </Grid>
     </header>
