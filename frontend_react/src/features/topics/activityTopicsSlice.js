@@ -6,23 +6,23 @@ const initialState = {
   items: [],
 };
 
-const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
-export const fetchAccountList = createAsyncThunk(
-  "mypage/getAccountList",
+export const fetchActivityTopics = createAsyncThunk(
+  "topics/getActivityTopics",
   async (id) => {
-    const response = await axios.get(`${BASE_API_URL}/users/${id}`);
+    const response = await axios.get(`${BASE_API_URL}/activity_topics`);
     return response.data;
   }
 );
 
 // Slices
-export const accountSlice = createSlice({
-  name: "account",  // stateの名前
+export const activityTopicsSlice = createSlice({
+  name: "activity_topics",  // stateの名前
   initialState: initialState,
   reducers: {
-    getAccountList: (state, action) => {
+    getactivityTopics: (state, action) => {
       return {
         ...state,
         items: action.payload,
@@ -31,28 +31,30 @@ export const accountSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccountList.pending, (state) => {
+      .addCase(fetchActivityTopics.pending, (state) => {
         return {
           ...state,
           isLoading: true,
         };
       })
-      .addCase(fetchAccountList.fulfilled, (state, action) => {
+      .addCase(fetchActivityTopics.fulfilled, (state, action) => {
         return {
           ...state,
           items: action.payload,
           isLoading: false,
         };
       })
-      .addCase(fetchAccountList.rejected, (state) => {
+      .addCase(fetchActivityTopics.rejected, (state) => {
         return {
           ...state,
           isLoading: false,
         };
-      });
+      })
+      ;
   },
 });
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
-export const { getAccountList } = accountSlice.actions;
-export default accountSlice.reducer;
+export const { getactivityTopics } = activityTopicsSlice.actions;
+
+export default activityTopicsSlice.reducer;

@@ -31,75 +31,75 @@ import Mypage from './pages/Mypage';
 
 const BaseApp = () => {
 
-  // const isLoggedIn = false;
-  const BASE_API_URL = "http://localhost:8000/api";
+  // // const isLoggedIn = false;
+  // const BASE_API_URL = "http://localhost:8000/api";
 
-  // JSONデータを取得する
-  const [projectList, setProjectList] = useState([]);
-  const [portfolioList, setPortfolioList] = useState([]);
-  const [activityList, setActivityList] = useState([]);
+  // // JSONデータを取得する
+  // const [projectList, setProjectList] = useState([]);
+  // const [portfolioList, setPortfolioList] = useState([]);
+  // const [activityList, setActivityList] = useState([]);
 
-  const fetchProjectList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/project_topics`);
-      console.log("fetchProjectList: ", response);
-      setProjectList(response.data);
-    }
-    catch (error) {
-      console.log("fetchProjectList: ", error);
-    }
-  }
+  // const fetchProjectList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/project_topics`);
+  //     console.log("fetchProjectList: ", response);
+  //     setProjectList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchProjectList: ", error);
+  //   }
+  // }
 
-  const fetchPortfolioList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
-      console.log("fetchPortfolioList: ", response);
-      setPortfolioList(response.data);
-    }
-    catch (error) {
-      console.log("fetchPortfolioList: ", error);
-    }
-  }
+  // const fetchPortfolioList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
+  //     console.log("fetchPortfolioList: ", response);
+  //     setPortfolioList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchPortfolioList: ", error);
+  //   }
+  // }
 
-  const fetchActivityList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
-      console.log("fetchActivityList: ", response);
-      setActivityList(response.data);
-    }
-    catch (error) {
-      console.log("fetchActivityList: ", error);
-    }
-  }
+  // const fetchActivityList = async () => {
+  //   try {
+  //     const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
+  //     console.log("fetchActivityList: ", response);
+  //     setActivityList(response.data);
+  //   }
+  //   catch (error) {
+  //     console.log("fetchActivityList: ", error);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchProjectList();
-    fetchPortfolioList();
-    fetchActivityList();
-  }, []);
+  // useEffect(() => {
+  //   fetchProjectList();
+  //   fetchPortfolioList();
+  //   fetchActivityList();
+  // }, []);
 
-  const filteredProjectList = projectList.filter((item) => {
-    return item.id <= 3;
-  });
-  const filteredPortfolioList = portfolioList.filter((item) => {
-    return item.id <= 3;
-  });
-  const filteredActivityList = activityList.filter((item) => {
-    return item.id <= 3;
-  });
+  // const filteredProjectList = projectList.filter((item) => {
+  //   return item.id <= 3;
+  // });
+  // const filteredPortfolioList = portfolioList.filter((item) => {
+  //   return item.id <= 3;
+  // });
+  // const filteredActivityList = activityList.filter((item) => {
+  //   return item.id <= 3;
+  // });
 
-  const getCategoryTags = (category_id) => {
-    switch (category_id) {
-      case 1:
-        return category_project;
-      case 2:
-        return category_portfolio;
-      case 3:
-        return category_activity;
-      default:
-        return null;
-    }
-  };
+  // const getCategoryTags = (category_id) => {
+  //   switch (category_id) {
+  //     case 1:
+  //       return category_project;
+  //     case 2:
+  //       return category_portfolio;
+  //     case 3:
+  //       return category_activity;
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   const menuItemStyle = {
     padding: '.5em 1em',

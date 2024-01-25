@@ -14,32 +14,8 @@ import { fetchAccountList, getAccountList } from '../features/mypage/mypageSlice
 const Mypage = (props) => {
 
   const user_id = props.user_id;
-  console.log("Mypage: user_id: ", user_id);
-
-  // テスト用: JSONPlaceholderを使用
-  // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
-
-  // JSONデータを取得する
-  // const [usersList, setUsersList] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchUsersList = async (id) => {
-  //     try {
-  //       const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-  //       console.log("fetchUsersList: ", response);
-  //       setUsersList(response.data);
-  //       console.log("fetchUsersList: usersList: ", usersList);
-  //     }
-  //     catch (error) {
-  //       console.log("fetchUsersList: ", error);
-  //     }
-  //   }
-
-  //   fetchUsersList(user_id);
-  // }, []);
-
-  // const itemsAccount = useSelector(getAccountList);
-  const itemsAccount = useSelector((state) => state.accountReducer.items);
+  
+  const usersList = useSelector((state) => state.accountReducer.items);
   const dispatch = useDispatch();
 
   // console.log("state: ", useSelector((state) => state));
@@ -48,10 +24,6 @@ const Mypage = (props) => {
   useEffect(() => {
     dispatch(fetchAccountList(user_id));
   }, [dispatch, user_id]);
-
-  // const usersList = itemsAccount.payload.accountReducer.items;
-  console.log("Mypage: itemsAccount: ", itemsAccount);
-  const usersList = itemsAccount;
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },

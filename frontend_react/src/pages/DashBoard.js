@@ -2,60 +2,30 @@ import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Box, Container, Grid } from '@mui/material'
 
 import DashBoardCarousel from '../components/DashBoardCarousel'
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
+import { fetchProjectTopics, getprojectTopics } from '../features/topics/projectTopicsSlice'
+import { fetchPortfolioTopics, getPortfolioTopics } from '../features/topics/portfolioTopicsSlice'
+import { fetchActivityTopics, getActivityTopics } from '../features/topics/activityTopicsSlice'
+
 const DashBoard = () => {
 
-  // const isLoggedIn = false;
-  const BASE_API_URL = "http://localhost:8000/api";
+  // state, dispatch, useSelectorを使う
+  const projectList = useSelector((state) => state.projectTopicsReducer.items);
+  const portfolioList = useSelector((state) => state.portfolioTopicsReducer.items);
+  const activityList = useSelector((state) => state.activityTopicsReducer.items);
 
-  // JSONデータを取得する
-  const [projectList, setProjectList] = useState([]);
-  const [portfolioList, setPortfolioList] = useState([]);
-  const [activityList, setActivityList] = useState([]);
-
-  const fetchProjectList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/project_topics`);
-      console.log("fetchProjectList: ", response);
-      setProjectList(response.data);
-    }
-    catch (error) {
-      console.log("fetchProjectList: ", error);
-    }
-  }
-
-  const fetchPortfolioList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/portfolio_topics`);
-      console.log("fetchPortfolioList: ", response);
-      setPortfolioList(response.data);
-    }
-    catch (error) {
-      console.log("fetchPortfolioList: ", error);
-    }
-  }
-
-  const fetchActivityList = async () => {
-    try {
-      const response = await Axios.get(`${BASE_API_URL}/activity_topics`);
-      console.log("fetchActivityList: ", response);
-      setActivityList(response.data);
-    }
-    catch (error) {
-      console.log("fetchActivityList: ", error);
-    }
-  }
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetchProjectList();
-    fetchPortfolioList();
-    fetchActivityList();
-  }, []);
+    dispatch(fetchProjectTopics());
+    dispatch(fetchPortfolioTopics());
+    dispatch(fetchActivityTopics());
+  }, [dispatch]);
 
   const filteredProjectList = projectList.filter((item) => {
     return item.id <= 3;

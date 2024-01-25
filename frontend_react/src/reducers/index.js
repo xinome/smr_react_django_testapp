@@ -2,6 +2,9 @@ import { combineReducers } from 'redux';
 // import { INCREMENT, DECREMENT } from './actionTypes';
 
 import accountReducer from '../features/mypage/mypageSlice';
+import projectTopicsReducer from '../features/topics/projectTopicsSlice';
+import portfolioTopicsReducer from '../features/topics/portfolioTopicsSlice';
+import activityTopicsReducer from '../features/topics/activityTopicsSlice';
 
 // initialState, reducerは後ほど別ファイルに分ける
 const initialState = {
@@ -11,10 +14,10 @@ const initialState = {
 
 const loginReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "INCREMENT":
-      return { count: state.count + action.payload.num };
-    case "DECREMENT":
-      return { count: state.count - action.payload.num };
+    // case "INCREMENT":
+    //   return { count: state.count + action.payload.num };
+    // case "DECREMENT":
+    //   return { count: state.count - action.payload.num };
     default:
       return state;
   }
@@ -25,7 +28,14 @@ const rootReducer = combineReducers({
   loginReducer,
   // INCREMENT,
   // DECREMENT,
+
+  // account
   accountReducer,
+
+  // topics
+  projectTopicsReducer,
+  portfolioTopicsReducer,
+  activityTopicsReducer,
 });
 
 export default rootReducer;
