@@ -61,7 +61,7 @@ const DashBoard = () => {
         <Grid container className='section-header'>
           <Grid item className='section-title'>参加プロジェクト</Grid>
           <Grid item>
-            <Link to='/project/list'>詳細を見る</Link>
+            <Link to='/project/list/'>詳細を見る</Link>
           </Grid>
         </Grid>
         <Box className='section-contents'>
@@ -95,7 +95,7 @@ const DashBoard = () => {
         <Grid container className='section-header'>
           <Grid item className='section-title'>ポートフォリオ</Grid>
           <Grid item>
-            <Link to='/portfolio/list'>詳細を見る</Link>
+            <Link to='/portfolio/list/'>詳細を見る</Link>
           </Grid>
         </Grid>
         <Box className='section-contents'>
@@ -124,7 +124,7 @@ const DashBoard = () => {
         <Grid container className='section-header'>
           <Grid item className='section-title'>活動記録</Grid>
           <Grid item>
-            <Link to='/activity'>詳細を見る</Link>
+            <Link to='/activity/'>詳細を見る</Link>
           </Grid>
         </Grid>
         <Box className='section-contents'>
@@ -158,7 +158,7 @@ const DashBoard = () => {
         <Grid container className='section-header'>
           <Grid item className='section-title'>活動記録</Grid>
           <Grid item>
-            <Link to='/activity'>詳細を見る</Link>
+            <Link to='/activity/'>詳細を見る</Link>
           </Grid>
         </Grid>
         <Box className='section-contents'>
@@ -179,7 +179,7 @@ const DashBoard = () => {
         <Grid container className='section-header'>
           <Grid item className='section-title'>活動記録</Grid>
           <Grid item>
-            <Link to='/activity'>詳細を見る</Link>
+            <Link to='/activity/'>詳細を見る</Link>
           </Grid>
         </Grid>
         <Box className='section-contents'>

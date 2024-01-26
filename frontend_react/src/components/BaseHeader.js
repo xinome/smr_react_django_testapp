@@ -1,49 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 // import Axios from 'axios';
-import { Box, Grid, Avatar } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
 
-import { bgcolor_header } from '../utils/ColorUtils';
+import { Box, Grid, Avatar } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
 
-import store from '../store';
+import { bgcolor_header } from '../utils/ColorUtils';
 
+import { fetchAuth, getAuth, login, logout } from '../features/account/authSlice';
 
 const BaseHeader = (props) => {
 
   const user_id = props.user_id;
-  console.log("BaseHeader: user_id: ", user_id);
 
   // const BASE_API_URL = "http://localhost:8000/api";
   // テスト用: JSONPlaceholderを使用
-  const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+  // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
+
+  const usersList = useSelector((state) => state.authReducer.items);
+  const dispatch = useDispatch();
 
   // JSONデータを取得する
-  const [usersList, setUsersList] = useState([]);
+  // const [usersList, setUsersList] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchUsersList = async (id) => {
+  //     try {
+  //       const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
+  //       console.log("fetchUsersList: ", response);
+  //       setUsersList(response.data);
+  //       console.log("fetchUsersList > usersList: ", usersList);
+
+  //     }
+  //     catch (error) {
+  //       console.log("fetchUsersList: ", error);
+  //     }
+  //   }
+
+  //   fetchUsersList(user_id);
+  // }, [user_id]);
 
   useEffect(() => {
-    const fetchUsersList = async (id) => {
-      try {
-        // const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-        // console.log("fetchUsersList: ", response);
-        // setUsersList(response.data);
-        // console.log("fetchUsersList > usersList: ", usersList);
-
-        fetch(`${BASE_API_URL}/users/${id}`)
-          .then((response) => response.json())
-          .then((data) => {
-            // store.dispatch({ type: 'FETCH_USERS_LIST', payload: data })
-            console.log("store: ", store.getState());
-            setUsersList(data);
-          });
-      }
-      catch (error) {
-        console.log("fetchUsersList: ", error);
-      }
-    }
-
-    fetchUsersList(user_id);
-  }, [user_id]);
+    dispatch(fetchAuth(user_id));
+  }, [dispatch, user_id]);
 
 
   const stringAvater = (name) => {

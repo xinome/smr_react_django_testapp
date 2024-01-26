@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // import logo from './logo.svg';
 import Axios from 'axios';
 
@@ -101,14 +102,18 @@ const BaseApp = () => {
   //   }
   // };
 
-  const menuItemStyle = {
-    padding: '.5em 1em',
-    margin: '0',
-    borderBottom: '1px solid #ccc',
-  };
+  // const menuItemStyle = {
+  //   padding: '.5em 1em',
+  //   margin: '0',
+  //   borderBottom: '1px solid #ccc',
+  // };
 
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
+  // const [open, setOpen] = useState(false);
+  // const [open2, setOpen2] = useState(false);
+
+  const pathname = useLocation().pathname.replaceAll('/', '');
+
+  console.log("useLocation.pathname: ", pathname);
   
   return (
     <div className="app">
@@ -133,19 +138,10 @@ const BaseApp = () => {
       </header> */}
       <BaseHeader user_id={1} />
       <Box className='app-container'>
-        <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
+        <BaseSideMenu />
+        {/* <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <List>
-            {/* <li>
-              ポートフォリオ
-              <ul>
-                <li>ポートフォリオ一覧</li>
-                <li>ポートフォリオ作成</li>
-              </ul>
-            </li> */}
             <ListItemButton sx={menuItemStyle} onClick={() => setOpen(!open)}>
-              {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
               <ListItemText primary="ポートフォリオ管理" />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
@@ -200,7 +196,7 @@ const BaseApp = () => {
               <ListItemButton sx={menuItemStyle}>活動記録</ListItemButton>
             </Link>
           </List>
-        </Box>
+        </Box> */}
 
         <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 

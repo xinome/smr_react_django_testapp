@@ -3,13 +3,13 @@ import Axios from 'axios'
 
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Box, Container, Grid, Typography, Breadcrumbs, Button, Table } from '@mui/material'
-import { TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
+import { Box, Container, Grid, Typography, Breadcrumbs, Button } from '@mui/material'
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
-import { fetchAccountList, getAccountList } from '../features/mypage/mypageSlice'
+import { fetchAccountList, getAccountList } from '../features/account/mypageSlice'
 
 const Mypage = (props) => {
 
@@ -17,9 +17,6 @@ const Mypage = (props) => {
   
   const usersList = useSelector((state) => state.accountReducer.items);
   const dispatch = useDispatch();
-
-  // console.log("state: ", useSelector((state) => state));
-  // console.log("state: ", store.getState());
 
   useEffect(() => {
     dispatch(fetchAccountList(user_id));
