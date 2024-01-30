@@ -21,28 +21,14 @@ export const fetchAuth = createAsyncThunk(
 
 // Slices
 export const authSlice = createSlice({
-  name: "auth",  // stateの名前
+  name: "auth",  // sliceの名前
   initialState: initialState,
   reducers: {
-    getAuth: (state, action) => {
-      return {
-        ...state,
-        items: action.payload,
-      };
-    },
-    login: (state, action) => {
-      return {
-        ...state,
-        isLoggedIn: true,
-      };
-    },
-    logout: (state, action) => {
-      return {
-        ...state,
-        isLoggedIn: false,
-      };
-    },
+    // standard reducer logic, with auto-generated action types per reducer
+    // 内部処理名: (state, action) => { return 処理結果 }
   },
+  
+  // 外部からのデータ取得
   extraReducers: (builder) => {
     builder
       .addCase(fetchAuth.pending, (state) => {

@@ -9,13 +9,14 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
-import { fetchAccountList, getAccountList } from '../features/account/mypageSlice'
+import { fetchAccountList } from '../features/account/mypageSlice'
 
 const Mypage = (props) => {
 
   const user_id = props.user_id;
   
   const usersList = useSelector((state) => state.accountReducer.items);
+  const isLoading = useSelector((state) => state.accountReducer.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {

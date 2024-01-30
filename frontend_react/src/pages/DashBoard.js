@@ -8,9 +8,9 @@ import { Box, Container, Grid } from '@mui/material'
 import DashBoardCarousel from '../components/DashBoardCarousel'
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
-import { fetchProjectTopics, getprojectTopics } from '../features/topics/projectTopicsSlice'
-import { fetchPortfolioTopics, getPortfolioTopics } from '../features/topics/portfolioTopicsSlice'
-import { fetchActivityTopics, getActivityTopics } from '../features/topics/activityTopicsSlice'
+import { fetchProjectTopics } from '../features/topics/projectTopicsSlice'
+import { fetchPortfolioTopics } from '../features/topics/portfolioTopicsSlice'
+import { fetchActivityTopics } from '../features/topics/activityTopicsSlice'
 
 const DashBoard = () => {
 

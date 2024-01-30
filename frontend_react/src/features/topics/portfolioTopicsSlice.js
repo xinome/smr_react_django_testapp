@@ -19,16 +19,14 @@ export const fetchPortfolioTopics = createAsyncThunk(
 
 // Slices
 export const portfolioTopicsSlice = createSlice({
-  name: "portfolio_topics",  // stateの名前
+  name: "portfolio_topics",  // sliceの名前
   initialState: initialState,
   reducers: {
-    getportfolioTopics: (state, action) => {
-      return {
-        ...state,
-        items: action.payload,
-      };
-    },
+    // standard reducer logic, with auto-generated action types per reducer
+    // 内部処理名: (state, action) => { return 処理結果 }
   },
+
+  // 外部からのデータ取得
   extraReducers: (builder) => {
     builder
       .addCase(fetchPortfolioTopics.pending, (state) => {
