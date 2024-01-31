@@ -85,19 +85,8 @@ def project_topics(request):
   # ]
 
   queryset = ProjectTopics.objects.all()
-
-  # for ProjectTopic in queryset:
-  #   print("ProjectTopic: ", ProjectTopic)
-  #   print("ProjectTopic.category: ", ProjectTopic.category)
-  #   print("ProjectTopic.category.id: ", ProjectTopic.category.id)
-  #   print("ProjectTopic.category.category_name: ", ProjectTopic.category.category_name)
-
   serializer_class = ProjectTopicsSerializer(queryset, many=True)
   data = serializer_class.data
-
-  # for item in data:
-  #   print("item: ", item)
-  #   print("item['category']: ", item['category'])
 
   return JsonResponse(data, safe=False)
 
@@ -211,9 +200,9 @@ def activity_topics(request):
 
   return JsonResponse(data, safe=False)
 
-def mypage_user_profile(request):
+def mypage_user_profile(request, pk=None):
 
-  queryset = MypageUserProfile.objects.all()
+  queryset = MypageUserProfile.objects.filter(id=pk)
   serializer_class = MypageUserProfileSerializer(queryset, many=True)
   data = serializer_class.data
 

@@ -48,8 +48,8 @@ class ActivityTopicsSerializer(serializers.ModelSerializer):
 class MypageUserProfileSerializer(serializers.ModelSerializer):
   # 外部キーのカテゴリーを取得する
   member_type = PricingPlanSerializer()
-  
+
   class Meta:
     model = MypageUserProfile
-    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'member_type')
+    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone', 'member_type')
 
