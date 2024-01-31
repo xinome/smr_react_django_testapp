@@ -8,7 +8,7 @@ import { deepPurple } from '@mui/material/colors';
 
 import { bgcolor_header } from '../utils/ColorUtils';
 
-import { fetchAuth, getAuth, login, logout } from '../features/account/authSlice';
+import { fetchAuth } from '../features/account/authSlice';
 
 const BaseHeader = (props) => {
 
