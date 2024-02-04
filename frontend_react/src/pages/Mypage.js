@@ -10,18 +10,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
 
-import { fetchAccountList } from '../features/account/mypageSlice'
+import { fetchMypageAccountList } from '../features/mypage/mypageSlice'
 
 const Mypage = (props) => {
 
   const user_id = props.user_id;
   
-  const usersList = useSelector((state) => state.accountReducer.items);
-  const isLoading = useSelector((state) => state.accountReducer.isLoading);
+  const usersList = useSelector((state) => state.mypageReducer.items);
+  const isLoading = useSelector((state) => state.mypageReducer.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAccountList(user_id));
+    dispatch(fetchMypageAccountList(user_id));
   }, [dispatch, user_id]);
 
   console.log("usersList: ", usersList);
