@@ -13,7 +13,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchGetMypageProfile = createAsyncThunk(
   "get_mypage_profile",  // type: 内部処理名、一意でないとだめ
   async (id) => {
-    const response = await axios.get(`${BASE_API_URL}/mypage/edit_profile/${id}/`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${id}/`);
     return response.data[0];
   }
 );
@@ -21,12 +21,24 @@ export const fetchGetMypageProfile = createAsyncThunk(
 // 更新
 export const fetchUpdateMypageProfile = createAsyncThunk(
   "update_mypage_profile",
-  async (id, data) => {
-    console.log("id: ", id);
-    console.log("data: ", data);
+  // async (id, data) => {
+  //   console.log("id: ", id);
+  //   console.log("data: ", data);
 
-    // const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}/`, data);
-    // return response.data;
+  //   // const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}/`, data);
+  //   // return response.data;
+  // }
+
+  async (id, { dispatch, getState }) => {
+    console.log("id: ", id);
+    console.log("getState: ", getState());
+    console.log("dispatch: ", dispatch);
+
+    const target_data = getState().mypageProfile.items;
+    console.log("target_data: ", target_data);
+
+    const response = await axios.patch(`${BASE_API_URL}/mypage/user_profile/${id}/`, target_data);
+    return response.data;
   }
 );
 
@@ -77,6 +89,30 @@ export const mypageProfileSlice = createSlice({
       })
       .addCase(fetchGetMypageProfile.rejected, (state) => {
         console.log("rejected..");
+        return {
+          ...state,
+          isLoading: false,
+        };
+      });
+
+    builder
+      .addCase(fetchUpdateMypageProfile.pending, (state) => {
+        console.log("pending..");
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(fetchUpdateMypageProfile.fulfilled, (state, action) => {
+        console.log("fulfilled: ", action.payload);
+        return {
+          ...state,
+          items: action.payload,
+          isLoading: false,
+        };
+      })
+      .addCase(fetchUpdateMypageProfile.rejected, (state, error) => {
+        console.log("rejected..", error);
         return {
           ...state,
           isLoading: false,

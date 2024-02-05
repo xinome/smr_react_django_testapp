@@ -39,7 +39,7 @@ const EditProfile = (props) => {
   }, [currentUserList]);
 
   useEffect(() => {
-    dispatch(fetchMypageAccountList(user_id));
+    dispatch(fetchGetMypageProfile(user_id));
   }, [dispatch, user_id]);
 
   const handleSubmit = (e, newUserList) => {
