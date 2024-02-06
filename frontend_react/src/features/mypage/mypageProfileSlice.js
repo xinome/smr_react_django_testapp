@@ -13,7 +13,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchGetMypageProfile = createAsyncThunk(
   "get_mypage_profile",  // type: 内部処理名、一意でないとだめ
   async (id) => {
-    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${id}/`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${id}`);
     return response.data[0];
   }
 );
@@ -25,7 +25,7 @@ export const fetchUpdateMypageProfile = createAsyncThunk(
   //   console.log("id: ", id);
   //   console.log("data: ", data);
 
-  //   // const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}/`, data);
+  //   // const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}`, data);
   //   // return response.data;
   // }
 
@@ -37,7 +37,7 @@ export const fetchUpdateMypageProfile = createAsyncThunk(
     const target_data = getState().mypageProfile.items;
     console.log("target_data: ", target_data);
 
-    const response = await axios.patch(`${BASE_API_URL}/mypage/user_profile/${id}/`, target_data);
+    const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${id}`, target_data);
     return response.data;
   }
 );
@@ -87,8 +87,8 @@ export const mypageProfileSlice = createSlice({
           isLoading: false,
         };
       })
-      .addCase(fetchGetMypageProfile.rejected, (state) => {
-        console.log("rejected..");
+      .addCase(fetchGetMypageProfile.rejected, (state, error) => {
+        console.log("rejected..", error);
         return {
           ...state,
           isLoading: false,
