@@ -8,11 +8,13 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper
 import { TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 // import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
-import store from '../../store'
+// import store from '../../store'
 
-import { fetchMypageAccountList } from '../../features/mypage/mypageSlice'
+// import { fetchMypageAccountList } from '../../features/mypage/mypageSlice'
 import { fetchGetMypageProfile, fetchUpdateMypageProfile } from '../../features/mypage/mypageProfileSlice'
 
 const EditProfile = (props) => {
@@ -25,34 +27,33 @@ const EditProfile = (props) => {
     { name: 'プロフィール変更' },
   ];
 
-  console.log("store: ", store.getState());
+  // console.log("store: ", store.getState());
   
-  const currentUserList = useSelector((state) => state.mypageReducer.items);
-  const isLoading = useSelector((state) => state.mypageReducer.isLoading);
+  const currentUserList = useSelector((state) => state.mypageProfileReducer.items);
+  const isLoading = useSelector((state) => state.mypageProfileReducer.isLoading);
   const dispatch = useDispatch();
 
   const [userList, setUserList] = useState(currentUserList);
+  const [snackOpen, setSnackOpen] = useState(false);
 
   // 初回のみ実行
-  useEffect(() => {
-    setUserList(currentUserList);
-  }, [currentUserList]);
-
   useEffect(() => {
     dispatch(fetchGetMypageProfile(user_id));
   }, [dispatch, user_id]);
 
+  useEffect(() => {
+    setUserList(currentUserList);
+  }, [currentUserList]);
+
   const handleSubmit = (e, newUserList) => {
     e.preventDefault();
-
-    console.log("store: ", store.getState());
 
     console.log("currentUserList: ", currentUserList);
     console.log("newUserList: ", newUserList);
 
     console.log("is_same: ", currentUserList === newUserList);
 
-    dispatch(fetchUpdateMypageProfile(user_id, newUserList));
+    dispatch(fetchUpdateMypageProfile(newUserList));
   }
   
   return (
@@ -96,7 +97,7 @@ const EditProfile = (props) => {
             </Grid>
           </Grid> */}
 
-          <form onSubmit={e => {handleSubmit(e, userList);}}>
+          <form method='POST' onSubmit={e => {handleSubmit(e, userList);}}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableBody>
@@ -191,6 +192,15 @@ const EditProfile = (props) => {
         </Box>
       )}
 
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackOpen(false)}
+      >
+        <Alert onClose={() => setSnackOpen(false)} severity="success" variant='filled' sx={{ width: '100%' }}>
+          プロフィールを更新しました
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }

@@ -12,7 +12,7 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchMypageAccountList = createAsyncThunk(
   "get_mypage_account",  // type: 内部処理名、一意でないとだめ
   async (id) => {
-    const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${id}`);
+    const response = await axios.get(`${BASE_API_URL}/mypage/${id}`);
     return response.data[0];
   }
 );

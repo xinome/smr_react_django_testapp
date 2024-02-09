@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   items: [],
+  status: "",
 };
 
 const BASE_API_URL = "http://localhost:8000/api";
@@ -13,32 +14,27 @@ const BASE_API_URL = "http://localhost:8000/api";
 export const fetchGetMypageProfile = createAsyncThunk(
   "get_mypage_profile",  // type: 内部処理名、一意でないとだめ
   async (id) => {
+    console.log("id: ", id);
     const response = await axios.get(`${BASE_API_URL}/mypage/user_profile/${id}`);
-    return response.data[0];
+    return response.data;
   }
 );
 
 // 更新
 export const fetchUpdateMypageProfile = createAsyncThunk(
   "update_mypage_profile",
-  // async (id, data) => {
-  //   console.log("id: ", id);
-  //   console.log("data: ", data);
+  async (data) => {
+    console.log("data: ", data);
+    console.log("id: ", data.id);
 
-  //   // const response = await axios.patch(`${BASE_API_URL}/mypage/edit_profile/${id}`, data);
-  //   // return response.data;
-  // }
-
-  async (id, { dispatch, getState }) => {
-    console.log("id: ", id);
-    console.log("getState: ", getState());
-    console.log("dispatch: ", dispatch);
-
-    const target_data = getState().mypageProfile.items;
-    console.log("target_data: ", target_data);
-
-    const response = await axios.post(`${BASE_API_URL}/mypage/edit_profile/${id}`, target_data);
-    return response.data;
+    try {
+      const response = await axios.post(`${BASE_API_URL}/mypage/user_profile/${data.id}`, data);
+      console.log("updateMypageProfile: ", response);
+      return response.data;
+    }
+    catch (error) {
+      console.log("updateMypageProfile_error: ", error);
+    }
   }
 );
 
@@ -48,24 +44,7 @@ export const mypageProfileSlice = createSlice({
   initialState: initialState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
-    // 内部処理名: (state, action) => { return 処理結果 }
-
-    // updateMypageProfile: (state, action) => {
-    //   console.log("state: ", state);
-    //   console.log("action: ", action);
-    //   // return state;
-    //   // return action.payload;
-
-    //   try {
-    //     const response = axios.patch(`${BASE_API_URL}/mypage/edit_profile/${action.payload.id}/`, action.payload);
-    //     console.log("updateMypageProfile: ", response);
-    //     return response.data;
-    //   }
-    //   catch (error) {
-    //     console.log("updateMypageProfile_error: ", error);
-    //   }
-    // }
-    
+    // 内部処理名: (state, action) => { return 処理結果 }    
   },
 
   // 外部からのデータ取得
@@ -77,6 +56,7 @@ export const mypageProfileSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchGetMypageProfile.fulfilled, (state, action) => {
@@ -85,13 +65,15 @@ export const mypageProfileSlice = createSlice({
           ...state,
           items: action.payload,
           isLoading: false,
+          status: "success",
         };
       })
-      .addCase(fetchGetMypageProfile.rejected, (state, error) => {
-        console.log("rejected..", error);
+      .addCase(fetchGetMypageProfile.rejected, (state) => {
+        console.log("rejected..");
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -101,6 +83,7 @@ export const mypageProfileSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchUpdateMypageProfile.fulfilled, (state, action) => {
@@ -109,6 +92,7 @@ export const mypageProfileSlice = createSlice({
           ...state,
           items: action.payload,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchUpdateMypageProfile.rejected, (state, error) => {
@@ -116,11 +100,12 @@ export const mypageProfileSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
   },
 });
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
-export const { updateMypageProfile } = mypageProfileSlice.actions;
+// export const { updateMypageProfile } = mypageProfileSlice.actions;
 export default mypageProfileSlice.reducer;

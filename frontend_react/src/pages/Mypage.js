@@ -223,8 +223,6 @@ const Mypage = (props) => {
         </>
       )}
 
-      
-
     </Container>
   )
 }

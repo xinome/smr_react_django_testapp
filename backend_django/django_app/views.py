@@ -1,11 +1,17 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework import viewsets
+
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+
+from rest_framework.views import APIView
+from rest_framework import status
 
 # Model, Serializerをインポートする
 from .serializers import (
   ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
-  MypageUserProfileSerializer,
+  MypageUserProfileSerializer, MypageUserProfileUpdateSerializer,
 )
 from .models import (
   ProjectTopics, PortfolioTopics, ActivityTopics,
@@ -201,8 +207,9 @@ def activity_topics(request):
   return JsonResponse(data, safe=False)
 
 
-# マイページ: ユーザープロフィールを取得するAPI
-def mypage_user_profile(request, pk=None):
+# # マイページ: インデックス、契約プラン、プロフィール、スキルを取得するAPI
+# 契約プラン、スキルは別途実装する
+def mypage_index(request, pk=None):
 
   if pk is None:
     queryset = MypageUserProfile.objects.all()
@@ -213,25 +220,94 @@ def mypage_user_profile(request, pk=None):
 
   return JsonResponse(data, safe=False)
 
-# マイページ: ユーザープロフィールを更新するAPI
-def mypage_edit_profile(request, pk=None):
 
-  queryset = MypageUserProfile.objects.filter(id=pk)
-  print("queryset: ", queryset)
+
+# マイページ: ユーザープロフィール
+@method_decorator(csrf_exempt, name='dispatch')
+class mypage_user_profile(APIView):
+  def get(self, request, pk):
+
+    print("request: ", request)
+    print("request.data: ", request.data)
+    
+    # 1件のみ取得
+    queryset = MypageUserProfile.objects.get(id=pk)
+    serializer_class = MypageUserProfileUpdateSerializer(queryset)
+
+    data = serializer_class.data
+
+    return JsonResponse(data, safe=False)
+
+  def post(self, request, pk):
+    
+    queryset = MypageUserProfile.objects.get(id=pk)
+
+    serializer_class = MypageUserProfileUpdateSerializer(queryset, data=request.data)
+    if serializer_class.is_valid():
+      serializer_class.save()
+      print("update success: ", serializer_class.data)
+      return JsonResponse(serializer_class.data, status=201)
+
+    print("update error: ", serializer_class.errors)
+    return JsonResponse(serializer_class.errors, status=400)
+
+
+# Postmanからの接続テスト（GET, POST, DELETEに限定する）
+@csrf_exempt
+def postman_test(request):
+  # postmanからのget, post, put, deleteのテスト
+  # https://www.postman.com/
+  
+  print("postman_test: ", request)
+  print("request: ", request)
   print("request.POST: ", request.POST)
+  
+  return JsonResponse({
+    "message": "postman_test",
+    "request": {
+      "method": request.method,
+      "path": request.path,
+      "GET": request.GET,
+      "POST": request.POST,
+    }
+  })
 
-  # queryset.update(
-  #   name=request.POST['name'],
-  #   account_id=request.POST['account_id'],
-  #   password=request.POST['password'],
-  #   email=request.POST['email'],
-  #   zip=request.POST['zip'],
-  #   address=request.POST['address'],
-  #   phone=request.POST['phone'],
-  #   member_type=request.POST['member_type']
-  # )
+# class based view
+@method_decorator(csrf_exempt, name='dispatch')
+# @api_view(['GET', 'POST'])
+class postman_class_test(APIView):
+  
+  # def get(self, request, *args, **kwargs):
+  def get(self, request, pk):
 
-  # serializer_class = MypageUserProfileSerializer(queryset, many=True)
-  # data = serializer_class.data
+    print("request: ", request)
+    print("request.data: ", request.data)
+    
+    # 1件のみ取得する場合
+    queryset = MypageUserProfile.objects.get(id=pk)
+    serializer_class = MypageUserProfileUpdateSerializer(queryset)
 
-  # return JsonResponse(data, safe=False)
+    # フィルターをかけて取得する場合、many=Trueを指定する
+    # queryset = MypageUserProfile.objects. filter(id=pk)
+    # serializer_class = MypageUserProfileUpdateSerializer(queryset, many=True)
+
+    data = serializer_class.data
+
+    return JsonResponse(data, safe=False)
+
+  def post(self, request, pk):
+    
+    print("request: ", request)
+    print("request.data: ", request.data)
+
+    queryset = MypageUserProfile.objects.get(id=pk)
+
+    serializer_class = MypageUserProfileUpdateSerializer(queryset, data=request.data)
+    if serializer_class.is_valid():
+      serializer_class.save()
+      return JsonResponse(serializer_class.data, status=201)
+
+    return JsonResponse(serializer_class.errors, status=400)
+
+
+
