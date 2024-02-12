@@ -7,7 +7,14 @@ from .models import (
   MypageUserProfile,
 )
 
-# Utility
+
+"""
+# Utility: 外部キー用のシリアライザー
+# 
+# TopicsCategory: カテゴリー一覧を取得するAPI
+# PricingPlan: 料金プラン一覧を取得するAPI
+"""
+
 class TopicsCategorySerializer(serializers.ModelSerializer):
   class Meta:
     model = TopicsCategory
@@ -20,7 +27,14 @@ class PricingPlanSerializer(serializers.ModelSerializer):
 
 
 
-# Dashboard
+"""
+# Dashboard: ダッシュボードのAPI
+#
+# project_topics: 【ダッシュボード】プロジェクトのトピック一覧を取得するAPI
+# portfolio_topics: 【ダッシュボード】ポートフォリオのトピック一覧を取得するAPI
+# activity_topics: 【ダッシュボード】活動のトピック一覧を取得するAPI
+"""
+
 class ProjectTopicsSerializer(serializers.ModelSerializer):
   # 外部キーのカテゴリーを取得する
   category = TopicsCategorySerializer()
@@ -43,6 +57,12 @@ class ActivityTopicsSerializer(serializers.ModelSerializer):
     fields = ('id', 'date', 'content', 'category')
 
 
+"""
+# Mypage: マイページのAPI
+#
+# mypage_index: 【マイページ】インデックス、契約プラン、プロフィール、スキルを取得するAPI
+# mypage_user_profile: 【マイページ】ユーザープロフィールを取得・更新するAPI
+"""
 
 # Mypage: get_user_profile
 class MypageUserProfileSerializer(serializers.ModelSerializer):
@@ -53,8 +73,9 @@ class MypageUserProfileSerializer(serializers.ModelSerializer):
     model = MypageUserProfile
     fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone', 'member_type')
 
-# Mypage: update_user_profile
+# Mypage: ユーザープロフィールを更新するAPI
 class MypageUserProfileUpdateSerializer(serializers.ModelSerializer):
+  
   # 対象: member_type（外部キー）以外
   class Meta:
     model = MypageUserProfile
