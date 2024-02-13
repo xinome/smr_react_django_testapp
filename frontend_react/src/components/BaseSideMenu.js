@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { bgcolor_sidemenu } from '../utils/ColorUtils';
+import { bgcolor_sidemenu, bgcolor_sidemenu_active } from '../utils/ColorUtils';
 
 import { List, ListItemButton, ListItemText, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import '../BaseApp.css';
 
-const BaseSideMenu = () => {
+const BaseSideMenu = (props) => {
+
+  const pathname = props.pathname;
   
   const menuItemStyle = {
     padding: '.5em 1em',
@@ -85,7 +87,14 @@ const BaseSideMenu = () => {
           <ListItemButton sx={menuItemStyle}>開発Tips</ListItemButton>
         </Link>
         <Link to='/activity/'>
-          <ListItemButton sx={menuItemStyle}>活動記録</ListItemButton>
+          <ListItemButton
+            sx={{
+              ...menuItemStyle,
+              backgroundColor: pathname === 'activity' ? bgcolor_sidemenu_active : bgcolor_sidemenu,
+            }}
+          >
+            活動記録
+          </ListItemButton>
         </Link>
       </List>
     </Box>

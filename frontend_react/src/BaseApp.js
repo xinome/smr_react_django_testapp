@@ -142,7 +142,7 @@ const BaseApp = () => {
       </header> */}
       <BaseHeader user_id={current_user_id} />
       <Box className='app-container'>
-        <BaseSideMenu />
+        <BaseSideMenu path={pathname} />
         {/* <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
           <List>
             <ListItemButton sx={menuItemStyle} onClick={() => setOpen(!open)}>

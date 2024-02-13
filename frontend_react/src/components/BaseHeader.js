@@ -14,10 +14,6 @@ const BaseHeader = (props) => {
 
   const user_id = props.user_id;
 
-  // const BASE_API_URL = "http://localhost:8000/api";
-  // テスト用: JSONPlaceholderを使用
-  // const BASE_API_URL = "https://jsonplaceholder.typicode.com";
-
   const usersList = useSelector((state) => state.authReducer.items);
   const dispatch = useDispatch();
 
@@ -45,13 +41,15 @@ const BaseHeader = (props) => {
     dispatch(fetchAuth(user_id));
   }, [dispatch, user_id]);
 
+  console.log("usersList: ", usersList);
 
   const stringAvater = (name) => {
     return {
       sx: {
         bgcolor: deepPurple[500]
       },
-      children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
+      // children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
+      children: name ? name.slice(0, 1) : '',
     };
   }
 
@@ -64,7 +62,7 @@ const BaseHeader = (props) => {
         <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
           {/* アカウント画像アイコン */}
           {/* <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar> */}
-          <Avatar {...stringAvater(usersList.name)}></Avatar>
+          <Avatar {...stringAvater(usersList.account_id)}></Avatar>
         </Grid>
         <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
           <Link to='/mypage/'>マイページ</Link>

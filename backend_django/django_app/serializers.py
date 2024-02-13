@@ -7,6 +7,17 @@ from .models import (
   MypageUserProfile,
 )
 
+"""
+Base: 全ページ共通のシリアライザー
+"""
+
+# Base: ログインアカウント
+class AuthAccountSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = MypageUserProfile
+    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone')
+
+
 
 """
 # Utility: 外部キー用のシリアライザー
