@@ -18,9 +18,14 @@ const BaseSideMenu = (props) => {
     borderBottom: '1px solid #ccc',
   };
 
-  const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
-  
+  const [openFlg, setOpenFlg] = useState(
+    {
+      "portfolio": false,
+      "project": false,
+      "tips": false,
+    }
+  );
+
   return (
     <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
       <List>
@@ -32,14 +37,16 @@ const BaseSideMenu = (props) => {
           </ul>
         </li> */}
 
-        <ListItemButton sx={menuItemStyle} onClick={() => setOpen(!open)}>
+        <ListItemButton sx={menuItemStyle}
+          onClick={() => setOpenFlg({ ...openFlg, portfolio: !openFlg["portfolio"]})}
+        >
           {/* <ListItemIcon>
             <InboxIcon />
           </ListItemIcon> */}
           <ListItemText primary="ポートフォリオ管理" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {openFlg["portfolio"] ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={openFlg["portfolio"]} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <Link to='/portfolio/list/'>
               <ListItemButton sx={{ ...menuItemStyle, pl: 4 }}>
@@ -58,11 +65,13 @@ const BaseSideMenu = (props) => {
           <ListItemButton sx={menuItemStyle}>ユーザ基本情報変更</ListItemButton>
         </Link>
 
-        <ListItemButton sx={menuItemStyle} onClick={() => setOpen2(!open2)}>
+        <ListItemButton sx={menuItemStyle}
+          onClick={() => setOpenFlg({ ...openFlg, project: !openFlg["project"]})}
+        >
           <ListItemText primary="プロジェクト管理" />
-          {open2 ? <ExpandLess /> : <ExpandMore />}
+          {openFlg["project"] ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open2} timeout="auto" unmountOnExit>
+        <Collapse in={openFlg["project"]} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <Link to='/project/list/'>
               <ListItemButton sx={{ pl: 4 }}>
@@ -83,9 +92,28 @@ const BaseSideMenu = (props) => {
         <Link to='/scout/'>
           <ListItemButton sx={menuItemStyle}>スカウト管理</ListItemButton>
         </Link>
-        <Link to='/tips/'>
-          <ListItemButton sx={menuItemStyle}>開発Tips</ListItemButton>
-        </Link>
+
+        <ListItemButton sx={menuItemStyle}
+          onClick={() => setOpenFlg({ ...openFlg, tips: !openFlg["tips"]})}
+        >
+          <ListItemText primary="開発tips" />
+          {openFlg["tips"] ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={openFlg["tips"]} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <Link to='/tips/list/'>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="開発tips一覧" />
+              </ListItemButton>
+            </Link>
+            <Link to='/tips/create/'>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="開発tips作成" />
+              </ListItemButton>
+            </Link>
+          </List>
+        </Collapse>
+
         <Link to='/activity/'>
           <ListItemButton
             sx={{

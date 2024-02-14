@@ -154,49 +154,6 @@ const DashBoard = () => {
         </Box>
       </Box>
 
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>活動記録</Grid>
-          <Grid item>
-            <Link to='/activity/'>詳細を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          {filteredActivityList.map((item) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.category_name}
-                </span>
-                {item.content}
-              </dd>
-            </dl>
-            ))}
-        </Box>
-      </Box>
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>活動記録</Grid>
-          <Grid item>
-            <Link to='/activity/'>詳細を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          {filteredActivityList.map((item) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.category_name}
-                </span>
-                {item.content}
-              </dd>
-            </dl>
-            ))}
-        </Box>
-      </Box>
-
     </Container>
   )
 }
