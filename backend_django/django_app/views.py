@@ -12,10 +12,12 @@ from rest_framework.decorators import api_view
 from .serializers import (
   ProjectTopicsSerializer, PortfolioTopicsSerializer, ActivityTopicsSerializer,
   MypageUserProfileSerializer, MypageUserProfileUpdateSerializer,
+  TipsContentsSerializer,
 )
 from .models import (
   ProjectTopics, PortfolioTopics, ActivityTopics,
   MypageUserProfile,
+  TipsContents,
 )
 
 # Create your views here.
@@ -67,6 +69,7 @@ def activity_topics(request):
   return JsonResponse(data, safe=False)
 
 
+
 # マイページ: インデックス、契約プラン、プロフィール、スキルを取得するAPI
 # 契約プラン、スキルは別途実装する
 def mypage_index(request, pk=None):
@@ -108,6 +111,17 @@ class mypage_user_profile(APIView):
 
     print("update error: ", serializer_class.errors)
     return JsonResponse(serializer_class.errors, status=400)
+
+
+
+# 開発Tips
+# Tips一覧
+def tips_contents(request):
+  queryset = TipsContents.objects.all()
+  serializer_class = TipsContentsSerializer(queryset, many=True)
+  data = serializer_class.data
+
+  return JsonResponse(data, safe=False)
 
 
 
