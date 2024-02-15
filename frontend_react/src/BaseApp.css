@@ -111,6 +111,15 @@ a:hover {
   align-items: center;
 }
 
+.section-contents dt {
+  width: 20%;
+}
+
+.section-contents dd {
+  width: 80%;
+  margin: 0;
+}
+
 .section-footer {
   margin-top: .5em;
   display: flex;
