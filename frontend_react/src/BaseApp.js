@@ -30,7 +30,8 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 import DashBoard from './pages/DashBoard';
 import Mypage from './pages/Mypage';
 import EditProfile from "./pages/mypage/EditProfile";
-import TipsList from "./pages/TipsList";
+import TipsIndex from "./pages/tips/TipsIndex";
+import TipsCategorize from "./pages/tips/TipsCategorize";
 
 const BaseApp = () => {
 
@@ -119,6 +120,8 @@ const BaseApp = () => {
 
   // 仮置き: ログインユーザID
   const current_user_id = 1;
+
+  const tips_category = "language";
   
   return (
     <div className="app">
@@ -207,7 +210,8 @@ const BaseApp = () => {
           <Route path="/dashboard/" element={<DashBoard />} /> 
           <Route path="/mypage/" element={<Mypage user_id={current_user_id} />} />
           <Route path="/mypage/edit_profile/" element={<EditProfile user_id={current_user_id} />} />
-          <Route path="/tips/list/" element={<TipsList />} />
+          <Route path="/tips/" element={<TipsIndex />} />
+          <Route path="/tips/:category_name" element={<TipsCategorize category_name={tips_category} />} />
         </Routes>
 
         {/* <Container className='page-maincontents'>
