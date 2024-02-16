@@ -8,11 +8,11 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
+import { category_project, category_portfolio, category_activity } from '../../utils/ColorUtils'
 
-import { fetchMypageAccountList } from '../features/mypage/mypageSlice'
+import { fetchMypageAccountList } from '../../features/mypage/mypageSlice'
 
-const Mypage = (props) => {
+const MypageIndex = (props) => {
 
   const user_id = props.user_id;
   
@@ -227,4 +227,4 @@ const Mypage = (props) => {
   )
 }
 
-export default Mypage
+export default MypageIndex

@@ -28,7 +28,7 @@ import DashBoardCarousel from './components/DashBoardCarousel';
 
 // ページ
 import DashBoard from './pages/DashBoard';
-import Mypage from './pages/Mypage';
+import MypageIndex from './pages/mypage/MypageIndex';
 import EditProfile from "./pages/mypage/EditProfile";
 import TipsIndex from "./pages/tips/TipsIndex";
 import TipsCategorize from "./pages/tips/TipsCategorize";
@@ -208,7 +208,7 @@ const BaseApp = () => {
 
         <Routes>
           <Route path="/dashboard/" element={<DashBoard />} /> 
-          <Route path="/mypage/" element={<Mypage user_id={current_user_id} />} />
+          <Route path="/mypage/" element={<MypageIndex user_id={current_user_id} />} />
           <Route path="/mypage/edit_profile/" element={<EditProfile user_id={current_user_id} />} />
           <Route path="/tips/" element={<TipsIndex />} />
           <Route path="/tips/:category_name" element={<TipsCategorize category_name={tips_category} />} />
