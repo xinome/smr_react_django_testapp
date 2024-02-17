@@ -10,26 +10,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { category_project, category_portfolio, category_activity, category_tips } from '../../utils/ColorUtils'
 
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 
-import { fetchTipsCategorizeList } from '../../features/tips/tipsCategorizeSlice'
+import { fetchTipsDetail } from '../../features/tips/tipsDetailSlice'
 
 const TipsCategorize = () => {
 
-  console.log("useParams: ", useParams());
-  console.log("tips_category: ", useParams().tips_category);
-
-  const params = useParams();
-  
-  const tipsList = useSelector((state) => state.tipsCategorizeReducer.items);
-  const isLoading = useSelector((state) => state.tipsCategorizeReducer.isLoading);
+  const tipsDetail = useSelector((state) => state.tipsDetailReducer.items);
+  const isLoading = useSelector((state) => state.tipsDetailReducer.isLoading);
   const dispatch = useDispatch();
 
+  const params = useParams();
+
   useEffect(() => {
-    dispatch(fetchTipsCategorizeList(params));
+    dispatch(fetchTipsDetail(params));
   }, [dispatch, params]);
 
-  console.log("tipsList: ", tipsList);
+  console.log("tipsDetail: ", tipsDetail);
 
   const getCategoryTags = (category_id) => {
     switch (category_id) {
@@ -49,7 +46,8 @@ const TipsCategorize = () => {
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
-    { name: params.tips_category },
+    { name: params.tips_category, href: `/tips/${params.tips_category}/` },
+    { name: params.tips_id },
   ];    
 
   return (
@@ -79,49 +77,30 @@ const TipsCategorize = () => {
         </Grid>
       </Grid>
 
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>{params.tips_category}</Grid>
-          <Grid item>
+      {tipsDetail.length !== 0 && !isLoading ? (
+        <Box className='section-wrapper'>
+          <Grid container className='section-header'>
+            <Grid item className='section-title'>{params.tips_category}</Grid>
+            <Grid item>
+            </Grid>
           </Grid>
-        </Grid>
-
-        {tipsList.length !== 0 && !isLoading ? (
           <Box className='section-contents'>
-            {/* <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl>
-            <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl>
-            <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl> */}
-            {tipsList.map((item) => (
-              <dl key={item.id}>
-                <dt>{item.date}</dt>
-                <dd>
-                  <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                    {item.category.tips_name}
-                  </span>
-                  <Link to={`/tips/${params.tips_category}/${item.id}`}>{item.title}</Link>
-                  <br />
-                  {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
-                </dd>
-              </dl>
-            ))}
+            <p>
+              {tipsDetail.title}
+            </p>
+            <p>
+              カテゴリー: {tipsDetail.category.tips_name}
+            </p>
+            <p>
+              {tipsDetail.content}
+            </p>
           </Box>
-        ) : (
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <CircularProgress />
-          </Box>
-        )}
-        
-
-      </Box>
+        </Box>
+      ) : (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </Box>
+      )}
 
     </Container>
   )

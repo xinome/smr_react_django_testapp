@@ -14,8 +14,6 @@ import { fetchTipsList } from '../../features/tips/tipsSlice'
 
 const TipsList = () => {
 
-  // const user_id = props.user_id;
-  
   const tipsList = useSelector((state) => state.tipsReducer.items);
   const isLoading = useSelector((state) => state.tipsReducer.isLoading);
   const dispatch = useDispatch();
@@ -105,149 +103,158 @@ const TipsList = () => {
         </Grid>
       </Box>
 
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>プロジェクト進行</Grid>
-          <Grid item>
-            <Link to='/tips/project/'>一覧を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl> */}
-          {filteredProjectTipsList.map((item) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.tips_name}
-                </span>
-                <Link to={`/tips/project/${item.id}`}>{item.title}</Link>
-                <br />
-                {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
-              </dd>
-            </dl>
-          ))}
-        </Box>
-      </Box>
 
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>開発言語</Grid>
-          <Grid item>
-            <Link to='/tips/language/'>一覧を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl> */}
-          {filteredLanguageTipsList.map((item) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.tips_name}
-                </span>
-                <Link to={`/tips/language/${item.id}`}>{item.title}</Link>
-                <br />
-                {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
-              </dd>
-            </dl>
-          ))}
+      { isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
         </Box>
-      </Box>
+      ) : (
+        <>
+          <Box className='section-wrapper'>
+            <Grid container className='section-header'>
+              <Grid item className='section-title'>プロジェクト進行</Grid>
+              <Grid item>
+                <Link to='/tips/project/'>一覧を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-contents'>
+              {/* <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl> */}
+              {filteredProjectTipsList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                      {item.category.tips_name}
+                    </span>
+                    <Link to={`/tips/project/${item.id}`}>{item.title}</Link>
+                    <br />
+                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                  </dd>
+                </dl>
+              ))}
+            </Box>
+          </Box>
 
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>フレームワーク</Grid>
-          <Grid item>
-            <Link to='/tips/framework/'>一覧を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl> */}
-          {filteredFrameworkTipsList.map((item) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.tips_name}
-                </span>
-                <Link to={`/tips/framework/${item.id}`}>{item.title}</Link>
-                <br />
-                {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
-              </dd>
-            </dl>
-          ))}
-        </Box>
-      </Box>
+          <Box className='section-wrapper'>
+            <Grid container className='section-header'>
+              <Grid item className='section-title'>開発言語</Grid>
+              <Grid item>
+                <Link to='/tips/language/'>一覧を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-contents'>
+              {/* <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl> */}
+              {filteredLanguageTipsList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                      {item.category.tips_name}
+                    </span>
+                    <Link to={`/tips/language/${item.id}`}>{item.title}</Link>
+                    <br />
+                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                  </dd>
+                </dl>
+              ))}
+            </Box>
+          </Box>
 
-      <Box className='section-wrapper'>
-        <Grid container className='section-header'>
-          <Grid item className='section-title'>インフラ</Grid>
-          <Grid item>
-            <Link to='/tips/infra/'>一覧を見る</Link>
-          </Grid>
-        </Grid>
-        <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl> */}
-          {filteredInfraTipsList.map((item) => (
-            <dl key={item.id}>
-              <dt>{item.date}</dt>
-              <dd>
-                <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                  {item.category.tips_name}
-                </span>
-                <Link to={`/tips/infra/${item.id}`}>{item.title}</Link>
-                <br />
-                {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
-              </dd>
-            </dl>
-          ))}
-        </Box>
-      </Box>
+          <Box className='section-wrapper'>
+            <Grid container className='section-header'>
+              <Grid item className='section-title'>フレームワーク</Grid>
+              <Grid item>
+                <Link to='/tips/framework/'>一覧を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-contents'>
+              {/* <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl> */}
+              {filteredFrameworkTipsList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                      {item.category.tips_name}
+                    </span>
+                    <Link to={`/tips/framework/${item.id}`}>{item.title}</Link>
+                    <br />
+                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                  </dd>
+                </dl>
+              ))}
+            </Box>
+          </Box>
+
+          <Box className='section-wrapper'>
+            <Grid container className='section-header'>
+              <Grid item className='section-title'>インフラ</Grid>
+              <Grid item>
+                <Link to='/tips/infra/'>一覧を見る</Link>
+              </Grid>
+            </Grid>
+            <Box className='section-contents'>
+              {/* <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl>
+              <dl>
+                <dt>2022.10.01</dt>
+                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
+              </dl> */}
+              {filteredInfraTipsList.map((item) => (
+                <dl key={item.id}>
+                  <dt>{item.date}</dt>
+                  <dd>
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
+                      {item.category.tips_name}
+                    </span>
+                    <Link to={`/tips/infra/${item.id}`}>{item.title}</Link>
+                    <br />
+                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                  </dd>
+                </dl>
+              ))}
+            </Box>
+          </Box>
+        </>
+      )}
 
     </Container>
   )
