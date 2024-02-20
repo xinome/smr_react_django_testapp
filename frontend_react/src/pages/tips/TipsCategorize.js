@@ -20,6 +20,8 @@ const TipsCategorize = () => {
   console.log("tips_category: ", useParams().tips_category);
 
   const params = useParams();
+
+  console.log("params: ", params);
   
   const tipsList = useSelector((state) => state.tipsCategorizeReducer.items);
   const isLoading = useSelector((state) => state.tipsCategorizeReducer.isLoading);
@@ -27,9 +29,13 @@ const TipsCategorize = () => {
 
   useEffect(() => {
     dispatch(fetchTipsCategorizeList(params));
-  }, [dispatch, params]);
+  }, []);
 
+  // object keysで表示
   console.log("tipsList: ", tipsList);
+  // console.log("typeof tipsList: ", typeof tipsList);
+  // console.log("keys: ", Object.keys(tipsList));
+  // console.log("values: ", Object.values(tipsList));
 
   const getCategoryTags = (category_id) => {
     switch (category_id) {
@@ -45,11 +51,29 @@ const TipsCategorize = () => {
         return null;
     }
   };
+
+  let current_category;
+  switch (params.tips_category) {
+    case 'project':
+      current_category = "プロジェクト";
+      break;
+    case 'language':
+      current_category = "開発言語";
+      break;
+    case 'framework':
+      current_category = "フレームワーク";
+      break;
+    case 'infra':
+      current_category = "インフラ";
+      break;
+    default:
+      current_category = null;
+  }
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
-    { name: params.tips_category },
+    { name: current_category },
   ];    
 
   return (
@@ -81,7 +105,7 @@ const TipsCategorize = () => {
 
       <Box className='section-wrapper'>
         <Grid container className='section-header'>
-          <Grid item className='section-title'>{params.tips_category}</Grid>
+          <Grid item className='section-title'>{current_category}</Grid>
           <Grid item>
           </Grid>
         </Grid>
@@ -100,16 +124,18 @@ const TipsCategorize = () => {
               <dt>2022.10.01</dt>
               <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
             </dl> */}
-            {tipsList.map((item) => (
-              <dl key={item.id}>
-                <dt>{item.date}</dt>
+
+            {/* オブジェクトの入れ子は取得前にレンダリングされる可能性があるため、?(オプショナルチェーン)を使用 */}
+            {Object.keys(tipsList).map((key) => (
+              <dl key={tipsList[key].id}>
+                <dt>{tipsList[key].date}</dt>
                 <dd>
-                  <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                    {item.category.tips_name}
+                  <span className="tag_category" style={{ backgroundColor: getCategoryTags(tipsList[key].category?.id) }}>
+                    {tipsList[key].category?.tips_name}
                   </span>
-                  <Link to={`/tips/${params.tips_category}/${item.id}`}>{item.title}</Link>
+                  <Link to={`/tips/${params.tips_category}/${tipsList[key].id}`}>{tipsList[key].title}</Link>
                   <br />
-                  {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                  {tipsList[key].content?.length > 100 ? tipsList[key].content.slice(0, 100) + '...' : tipsList[key].content}
                 </dd>
               </dl>
             ))}
@@ -119,7 +145,6 @@ const TipsCategorize = () => {
             <CircularProgress />
           </Box>
         )}
-        
 
       </Box>
 

@@ -20,30 +20,9 @@ const TipsList = () => {
 
   useEffect(() => {
     dispatch(fetchTipsList());
-  }, [dispatch]);
+  }, []);
 
   console.log("tipsList: ", tipsList);
-
-  const filteredProjectTipsList = tipsList.filter((item) => {
-    return item.category.id === 1;
-  });
-
-  const filteredLanguageTipsList = tipsList.filter((item) => {
-    return item.category.id === 2;
-  });
-
-  const filteredFrameworkTipsList = tipsList.filter((item) => {
-    return item.category.id === 3;
-  });
-
-  const filteredInfraTipsList = tipsList.filter((item) => {
-    return item.category.id === 4;
-  });
-
-  console.log("filteredProjectTipsList: ", filteredProjectTipsList);
-  console.log("filteredLanguageTipsList: ", filteredLanguageTipsList);
-  console.log("filteredFrameworkTipsList: ", filteredFrameworkTipsList);
-  console.log("filteredInfraTipsList: ", filteredInfraTipsList);
 
   const getCategoryTags = (category_id) => {
     switch (category_id) {
@@ -104,11 +83,7 @@ const TipsList = () => {
       </Box>
 
 
-      { isLoading ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <CircularProgress />
-        </Box>
-      ) : (
+      {tipsList.length !== 0 && !isLoading ? (
         <>
           <Box className='section-wrapper'>
             <Grid container className='section-header'>
@@ -130,16 +105,18 @@ const TipsList = () => {
                 <dt>2022.10.01</dt>
                 <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
               </dl> */}
-              {filteredProjectTipsList.map((item) => (
-                <dl key={item.id}>
-                  <dt>{item.date}</dt>
+              {Object.keys(tipsList).filter(
+                (key) => tipsList[key].category?.id === 1
+              ).map((key) => (
+                <dl key={tipsList[key].id}>
+                  <dt>{tipsList[key].date}</dt>
                   <dd>
-                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                      {item.category.tips_name}
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(tipsList[key].category?.id) }}>
+                      {tipsList[key].category?.tips_name}
                     </span>
-                    <Link to={`/tips/project/${item.id}`}>{item.title}</Link>
+                    <Link to={`/tips/project/${tipsList[key].id}`}>{tipsList[key].title}</Link>
                     <br />
-                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                    {tipsList[key].content?.length > 100 ? tipsList[key].content.slice(0, 100) + '...' : tipsList[key].content}
                   </dd>
                 </dl>
               ))}
@@ -166,16 +143,18 @@ const TipsList = () => {
                 <dt>2022.10.01</dt>
                 <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
               </dl> */}
-              {filteredLanguageTipsList.map((item) => (
-                <dl key={item.id}>
-                  <dt>{item.date}</dt>
+              {Object.keys(tipsList).filter(
+                (key) => tipsList[key].category?.id === 2
+              ).map((key) => (
+                <dl key={tipsList[key].id}>
+                  <dt>{tipsList[key].date}</dt>
                   <dd>
-                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                      {item.category.tips_name}
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(tipsList[key].category?.id) }}>
+                      {tipsList[key].category?.tips_name}
                     </span>
-                    <Link to={`/tips/language/${item.id}`}>{item.title}</Link>
+                    <Link to={`/tips/language/${tipsList[key].id}`}>{tipsList[key].title}</Link>
                     <br />
-                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                    {tipsList[key].content?.length > 100 ? tipsList[key].content.slice(0, 100) + '...' : tipsList[key].content}
                   </dd>
                 </dl>
               ))}
@@ -202,16 +181,18 @@ const TipsList = () => {
                 <dt>2022.10.01</dt>
                 <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
               </dl> */}
-              {filteredFrameworkTipsList.map((item) => (
-                <dl key={item.id}>
-                  <dt>{item.date}</dt>
+              {Object.keys(tipsList).filter(
+                (key) => tipsList[key].category?.id === 3
+              ).map((key) => (
+                <dl key={tipsList[key].id}>
+                  <dt>{tipsList[key].date}</dt>
                   <dd>
-                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                      {item.category.tips_name}
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(tipsList[key].category?.id) }}>
+                      {tipsList[key].category?.tips_name}
                     </span>
-                    <Link to={`/tips/framework/${item.id}`}>{item.title}</Link>
+                    <Link to={`/tips/framework/${tipsList[key].id}`}>{tipsList[key].title}</Link>
                     <br />
-                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                    {tipsList[key].content?.length > 100 ? tipsList[key].content.slice(0, 100) + '...' : tipsList[key].content}
                   </dd>
                 </dl>
               ))}
@@ -238,22 +219,28 @@ const TipsList = () => {
                 <dt>2022.10.01</dt>
                 <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
               </dl> */}
-              {filteredInfraTipsList.map((item) => (
-                <dl key={item.id}>
-                  <dt>{item.date}</dt>
+              {Object.keys(tipsList).filter(
+                (key) => tipsList[key].category?.id === 4
+              ).map((key) => (
+                <dl key={tipsList[key].id}>
+                  <dt>{tipsList[key].date}</dt>
                   <dd>
-                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(item.category.id) }}>
-                      {item.category.tips_name}
+                    <span className="tag_category" style={{ backgroundColor: getCategoryTags(tipsList[key].category?.id) }}>
+                      {tipsList[key].category?.tips_name}
                     </span>
-                    <Link to={`/tips/infra/${item.id}`}>{item.title}</Link>
+                    <Link to={`/tips/infra/${tipsList[key].id}`}>{tipsList[key].title}</Link>
                     <br />
-                    {item.content|item.content.length > 100 ? item.content.slice(0, 100) + '...' : item.content}
+                    {tipsList[key].content?.length > 100 ? tipsList[key].content.slice(0, 100) + '...' : tipsList[key].content}
                   </dd>
                 </dl>
               ))}
             </Box>
           </Box>
         </>
+      ) : (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </Box>
       )}
 
     </Container>

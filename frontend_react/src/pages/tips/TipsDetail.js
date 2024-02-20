@@ -22,9 +22,12 @@ const TipsCategorize = () => {
 
   const params = useParams();
 
+  console.log("params: ", params);
+
   useEffect(() => {
+    // 並列にされる
     dispatch(fetchTipsDetail(params));
-  }, [dispatch, params]);
+  }, []);
 
   console.log("tipsDetail: ", tipsDetail);
 
@@ -42,11 +45,29 @@ const TipsCategorize = () => {
         return null;
     }
   };
+
+  let current_category;
+  switch (params.tips_category) {
+    case 'project':
+      current_category = "プロジェクト";
+      break;
+    case 'language':
+      current_category = "開発言語";
+      break;
+    case 'framework':
+      current_category = "フレームワーク";
+      break;
+    case 'infra':
+      current_category = "インフラ";
+      break;
+    default:
+      current_category = null;
+  }
   
   const breadcrumbs = [
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
-    { name: params.tips_category, href: `/tips/${params.tips_category}/` },
+    { name: current_category, href: `/tips/${params.tips_category}/` },
     { name: params.tips_id },
   ];    
 
@@ -80,7 +101,7 @@ const TipsCategorize = () => {
       {tipsDetail.length !== 0 && !isLoading ? (
         <Box className='section-wrapper'>
           <Grid container className='section-header'>
-            <Grid item className='section-title'>{params.tips_category}</Grid>
+            <Grid item className='section-title'>{current_category}</Grid>
             <Grid item>
             </Grid>
           </Grid>
@@ -88,9 +109,7 @@ const TipsCategorize = () => {
             <p>
               {tipsDetail.title}
             </p>
-            <p>
-              カテゴリー: {tipsDetail.category.tips_name}
-            </p>
+            <p>{`カテゴリー：${tipsDetail.category?.tips_name}`}</p>
             <p>
               {tipsDetail.content}
             </p>
