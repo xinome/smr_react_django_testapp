@@ -23,7 +23,7 @@ export const fetchTipsDetail = createAsyncThunk(
 
 // Slices
 export const tipsDetailSlice = createSlice({
-  name: "tips",  // sliceの名前
+  name: "tips_detail",  // sliceの名前
   initialState: initialState,
   reducers: {
     // standard reducer logic, with auto-generated action types per reducer
