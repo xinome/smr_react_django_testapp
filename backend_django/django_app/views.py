@@ -182,7 +182,7 @@ class tips_contents_create(APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class tips_contents_update(APIView):
 
-  # GET: 確認用
+  # GET: 編集時に参照
   def get(self, request, pk):
 
     # 1件のみ取得

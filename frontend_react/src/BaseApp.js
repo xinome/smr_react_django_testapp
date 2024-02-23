@@ -34,6 +34,8 @@ import EditProfile from "./pages/mypage/EditProfile";
 import TipsIndex from "./pages/tips/TipsIndex";
 import TipsCategorize from "./pages/tips/TipsCategorize";
 import TipsDetail from "./pages/tips/TipsDetail";
+import TipsCreate from "./pages/tips/TipsCreate";
+import TipsEdit from "./pages/tips/TipsEdit";
 
 const BaseApp = () => {
 
@@ -211,6 +213,8 @@ const BaseApp = () => {
           <Route path="/mypage/" element={<MypageIndex user_id={current_user_id} />} />
           <Route path="/mypage/edit_profile/" element={<EditProfile user_id={current_user_id} />} />
           <Route path="/tips/" element={<TipsIndex />} />
+          <Route path="/tips/create/" element={<TipsCreate />} />
+          <Route path="/tips/edit/:tips_id" element={<TipsEdit />} />
           <Route path="/tips/:tips_category" element={<TipsCategorize />} />
           <Route path="/tips/:tips_category/:tips_id" element={<TipsDetail />} />
         </Routes>
