@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
 
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -23,25 +23,48 @@ import { category_project, category_portfolio, category_activity, category_tips 
 
 import { useParams } from 'react-router-dom'
 
-// import { fetchTipsDetail } from '../../features/tips/tipsDetailSlice'
-import { fetchTipsEdit } from '../../features/tips/tipsEditSlice'
+import { fetchGetTipsToEdit, fetchUpdateTips } from '../../features/tips/tipsEditSlice'
+import { fetchCategoryList } from '../../features/tips/tipsCategoryListSlice'
 
 const TipsEdit = () => {
 
-  const tipsDetail = useSelector((state) => state.tipsDetailReducer.items);
+  const currentTipsDetail = useSelector((state) => state.tipsDetailReducer.items);
   const isLoading = useSelector((state) => state.tipsDetailReducer.isLoading);
+  const categoryList = useSelector((state) => state.tipsCategoryListReducer.items);
+
   const dispatch = useDispatch();
 
   const params = useParams();
 
   console.log("params: ", params);
 
+  const [tipsState, setTipsState] = useState(currentTipsDetail);
+
   useEffect(() => {
     // 並列にされる
-    dispatch(fetchTipsEdit(params));
+    dispatch(fetchGetTipsToEdit(params));
+    dispatch(fetchCategoryList());
+
+    console.log("categoryList: ", categoryList);
   }, []);
 
-  console.log("tipsDetail: ", tipsDetail);
+  useEffect(() => {
+    setTipsState(currentTipsDetail);
+  }, [currentTipsDetail]);
+
+  const handleSubmit = (e, tipsState) => {
+    e.preventDefault();
+
+    console.log("currentTipsDetail: ", currentTipsDetail);
+    console.log("tipsState: ", tipsState);
+
+    console.log("is_same: ", currentTipsDetail === tipsState);
+    
+    if(currentTipsDetail !== tipsState) {
+      dispatch(fetchUpdateTips(tipsState));
+    }
+
+  }
 
   const getCategoryTags = (category_id) => {
     switch (category_id) {
@@ -82,6 +105,20 @@ const TipsEdit = () => {
     { name: '編集' },
   ];    
 
+  // TestareaのみBase UIを使用
+  const Textarea = styled(BaseTextareaAutosize)(
+    ({ theme }) => `
+      box-sizing: border-box;
+      width: 320px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 8px 12px;
+      border-radius: 8px;
+    `,
+  );
+
   return (
     <Container className='page-maincontents'>
 
@@ -111,7 +148,7 @@ const TipsEdit = () => {
 
       <Box className='section-wrapper'>
 
-          <form method='POST' >
+          <form method='POST' onSubmit={e => {handleSubmit(e, tipsState)}}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableBody>
@@ -121,8 +158,9 @@ const TipsEdit = () => {
                     </TableCell>
                     <TableCell align="right">
                       <TextField required id="outlined-basic" label="Required" variant="outlined"
-                        value={tipsDetail.title}
-                        onChange={(e) => {}}
+                        sx={{ minWidth: '100%' }}
+                        value={tipsState.title}
+                        onChange={e => setTipsState({...tipsState, title: e.target.value})}
                       />
                     </TableCell>
                   </TableRow>
@@ -131,21 +169,31 @@ const TipsEdit = () => {
                       Tipsカテゴリー
                     </TableCell>
                     <TableCell align="right">
-                      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                      <FormControl variant="standard" sx={{ m: 1, minWidth: '100%' }}>
                         <InputLabel id="demo-simple-select-standard-label">Tips Category</InputLabel>
                         <Select
                           labelId="demo-simple-select-standard-label"
                           id="demo-simple-select-standard"
-                          value={tipsDetail.category.id}
-                          onChange={(e) => {}}
-                          label="Age"
+                          value={categoryList.findIndex(category => category.id === tipsState.category?.id) + 1}
+                          onChange={e => {
+                            e.preventDefault();
+                            setTipsState({
+                              ...tipsState,
+                              category: {
+                                id: e.target.value,
+                                tips_name: categoryList[e.target.value - 1] ? categoryList[e.target.value - 1].tips_name : '',
+                                tips_path: categoryList[e.target.value - 1] ? categoryList[e.target.value - 1].tips_path : '',
+                              }
+                            });
+                          }}
+                          label="Category"
                         >
-                          <MenuItem value="">
+                          <MenuItem value="0">
                             <em>None</em>
                           </MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
+                          {categoryList.map((category, index) => (
+                            <MenuItem key={index} value={category.id}>{category.tips_name}</MenuItem>
+                          ))}
                         </Select>
                       </FormControl>
                     </TableCell>
@@ -158,8 +206,12 @@ const TipsEdit = () => {
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['DatePicker', 'DatePicker']}>
                           <DatePicker
-                            label="Controlled picker"
-                            value={dayjs(tipsDetail.date)}
+                            label="date"
+                            sx={{ minWidth: '100%' }}
+                            value={dayjs(tipsState.date)}
+                            onChange={(newValue) => {
+                              setTipsState({...tipsState, date: dayjs(newValue).format('YYYY-MM-DD')})
+                            }}
                           />
                         </DemoContainer>
                       </LocalizationProvider>
@@ -170,18 +222,13 @@ const TipsEdit = () => {
                       文面
                     </TableCell>
                     <TableCell align="right">
-                      <TextareaAutosize
+                      <Textarea
                         className="CustomTextareaIntrocudtion"
                         aria-label="empty textarea"
                         placeholder="Empty"
-                        value={tipsDetail.content}
-                        sx={{
-                          // boxSizing: 'border-box',
-                          // width: '320px',
-                          minWidth: '100%',
-                          // fontFamily: 'inherit',
-                          // fontSize: '14px',
-                        }}
+                        value={tipsState.content}
+                        onChange={e => setTipsState({...tipsState, content: e.target.value})}
+                        sx={{ minWidth: '100%' }}
                       />
                     </TableCell>
                   </TableRow>
@@ -192,7 +239,7 @@ const TipsEdit = () => {
 
             <Box className='section-footer'>
               <Button variant="contained" color="primary" type='submit'>
-                Tipsを作成する
+                Tipsを更新する
               </Button>
             </Box>
           </form>
