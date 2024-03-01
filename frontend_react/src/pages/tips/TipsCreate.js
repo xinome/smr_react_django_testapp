@@ -13,66 +13,59 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
 
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import { category_project, category_portfolio, category_activity, category_tips } from '../../utils/ColorUtils'
 
-import { useParams } from 'react-router-dom'
+import { fetchCreateTips } from '../../features/tips/tipsEditSlice'
+import { fetchCategoryList } from '../../features/tips/tipsCategoryListSlice'
 
-import { fetchTipsDetail } from '../../features/tips/tipsDetailSlice'
+const initialTipsState = {
+  "title": "",
+  "date": "",
+  "content": "",
+  "category": {
+      "id": 0,
+      "tips_name": "",
+      "tips_path": ""
+  }
+};
 
 const TipsCreate = () => {
 
-  const tipsDetail = useSelector((state) => state.tipsDetailReducer.items);
-  const isLoading = useSelector((state) => state.tipsDetailReducer.isLoading);
+  const categoryList = useSelector((state) => state.tipsCategoryListReducer.items);
   const dispatch = useDispatch();
 
-  const params = useParams();
-
-  console.log("params: ", params);
+  const [tipsState, setTipsState] = useState(initialTipsState);
+  const [snackOpen, setSnackOpen] = useState(false);
 
   useEffect(() => {
     // 並列にされる
-    dispatch(fetchTipsDetail(params));
+    // dispatch(fetchGetTipsToEdit(params));
+    dispatch(fetchCategoryList());
+
+    console.log("categoryList: ", categoryList);
   }, []);
 
-  console.log("tipsDetail: ", tipsDetail);
+  const handleSubmit = (e, tipsState) => {
+    e.preventDefault();
 
-  const getCategoryTags = (category_id) => {
-    switch (category_id) {
-      case 1:
-        return category_project;
-      case 2:
-        return category_portfolio;
-      case 3:
-        return category_activity;
-      case 4:
-        return category_tips;
-      default:
-        return null;
+    console.log("tipsState: ", tipsState);
+
+    // 仮バリデーション
+    if(tipsState.title !== '' && tipsState.date !== '' 
+      && tipsState.content !== '' && tipsState.category.id !== 0
+    ) {
+      dispatch(fetchCreateTips(tipsState));
+      setSnackOpen(true);
     }
-  };
 
-  let current_category;
-  switch (params.tips_category) {
-    case 'project':
-      current_category = "プロジェクト";
-      break;
-    case 'language':
-      current_category = "開発言語";
-      break;
-    case 'framework':
-      current_category = "フレームワーク";
-      break;
-    case 'infra':
-      current_category = "インフラ";
-      break;
-    default:
-      current_category = null;
   }
   
   const breadcrumbs = [
@@ -80,6 +73,20 @@ const TipsCreate = () => {
     { name: '開発Tips', href: '/tips/' },
     { name: '新規作成' },
   ];    
+
+  // TestareaのみBase UIを使用
+  const Textarea = styled(BaseTextareaAutosize)(
+    ({ theme }) => `
+      box-sizing: border-box;
+      width: 320px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 8px 12px;
+      border-radius: 8px;
+    `,
+  );
 
   return (
     <Container className='page-maincontents'>
@@ -110,89 +117,112 @@ const TipsCreate = () => {
 
       <Box className='section-wrapper'>
 
-          <form method='POST' >
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableBody>
-                  <TableRow >
-                    <TableCell component="th" scope="row">
-                      タイトル
-                    </TableCell>
-                    <TableCell align="right">
-                      <TextField required id="outlined-basic" label="Required" variant="outlined"
-                      />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow >
-                    <TableCell component="th" scope="row">
-                      Tipsカテゴリー
-                    </TableCell>
-                    <TableCell align="right">
-                      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                        <InputLabel id="demo-simple-select-standard-label">Tips Category</InputLabel>
-                        <Select
-                          labelId="demo-simple-select-standard-label"
-                          id="demo-simple-select-standard"
-                          // value={age}
-                          // onChange={handleChange}
-                          label="Age"
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={10}>Ten</MenuItem>
-                          <MenuItem value={20}>Twenty</MenuItem>
-                          <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow >
-                    <TableCell component="th" scope="row">
-                      作成日
-                    </TableCell>
-                    <TableCell align="right">
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['DatePicker', 'DatePicker']}>
-                          <DatePicker
-                            label="Controlled picker"
-                            // value={value}
-                            // onChange={(newValue) => setValue(newValue)}
-                          />
-                        </DemoContainer>
-                      </LocalizationProvider>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow >
-                    <TableCell component="th" scope="row">
-                      文面
-                    </TableCell>
-                    <TableCell align="right">
-                      <TextareaAutosize
-                        className="CustomTextareaIntrocudtion"
-                        aria-label="empty textarea"
-                        placeholder="Empty"
-                        sx={{
-                          boxSizing: 'border-box',
-                          width: '320px',
-                          fontFamily: 'inherit',
-                          fontSize: '14px',
+        <form method='POST' onSubmit={e => {handleSubmit(e, tipsState)}}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableBody>
+                <TableRow >
+                  <TableCell component="th" scope="row">
+                    タイトル
+                  </TableCell>
+                  <TableCell align="right">
+                    <TextField required id="outlined-basic" label="Required" variant="outlined"
+                      sx={{ minWidth: '100%' }}
+                      value={tipsState.title}
+                      onChange={e => setTipsState({...tipsState, title: e.target.value})}
+                    />
+                  </TableCell>
+                </TableRow>
+                <TableRow >
+                  <TableCell component="th" scope="row">
+                    Tipsカテゴリー
+                  </TableCell>
+                  <TableCell align="right">
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: '100%' }}>
+                      <InputLabel id="demo-simple-select-standard-label">Tips Category</InputLabel>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        value={categoryList.findIndex(category => category.id === tipsState.category?.id) + 1}
+                        onChange={e => {
+                          e.preventDefault();
+                          setTipsState({
+                            ...tipsState,
+                            category: {
+                              id: e.target.value,
+                              tips_name: categoryList[e.target.value - 1] ? categoryList[e.target.value - 1].tips_name : '',
+                              tips_path: categoryList[e.target.value - 1] ? categoryList[e.target.value - 1].tips_path : '',
+                            }
+                          });
                         }}
-                      />
-                    </TableCell>
-                  </TableRow>
+                        label="Category"
+                      >
+                        <MenuItem value="0">
+                          <em>None</em>
+                        </MenuItem>
+                        {categoryList.map((category, index) => (
+                          <MenuItem key={index} value={category.id}>{category.tips_name}</MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </TableCell>
+                </TableRow>
+                <TableRow >
+                  <TableCell component="th" scope="row">
+                    作成日
+                  </TableCell>
+                  <TableCell align="right">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['DatePicker', 'DatePicker']}>
+                        <DatePicker
+                          label="date"
+                          sx={{ minWidth: '100%' }}
+                          value={dayjs(tipsState.date)}
+                          onChange={(newValue) => {
+                            setTipsState({...tipsState, date: dayjs(newValue).format('YYYY-MM-DD')})
+                          }}
+                        />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                  </TableCell>
+                </TableRow>
+                <TableRow >
+                  <TableCell component="th" scope="row">
+                    文面
+                  </TableCell>
+                  <TableCell align="right">
+                    <Textarea
+                      className="CustomTextareaIntrocudtion"
+                      aria-label="empty textarea"
+                      placeholder="Empty"
+                      value={tipsState.content}
+                      onChange={e => setTipsState({...tipsState, content: e.target.value})}
+                      sx={{ minWidth: '100%' }}
+                    />
+                  </TableCell>
+                </TableRow>
 
-                </TableBody>
-              </Table>
-            </TableContainer>
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-            <Box className='section-footer'>
-              <Button variant="contained" color="primary" type='submit'>
-                Tipsを作成する
-              </Button>
-            </Box>
-          </form>
-        </Box>
+          <Box className='section-footer'>
+            <Button variant="contained" color="primary" type='submit'>
+              Tipsを作成する
+            </Button>
+          </Box>
+        </form>
+      </Box>
+
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackOpen(false)}
+      >
+        <Alert onClose={() => setSnackOpen(false)} severity="success" variant='filled' sx={{ width: '100%' }}>
+        Tipsを作成しました
+        </Alert>
+      </Snackbar>
 
     </Container>
   )

@@ -18,6 +18,8 @@ import { styled } from '@mui/system';
 
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import { category_project, category_portfolio, category_activity, category_tips } from '../../utils/ColorUtils'
 
@@ -39,6 +41,7 @@ const TipsEdit = () => {
   console.log("params: ", params);
 
   const [tipsState, setTipsState] = useState(currentTipsDetail);
+  const [snackOpen, setSnackOpen] = useState(false);
 
   useEffect(() => {
     // 並列にされる
@@ -62,6 +65,7 @@ const TipsEdit = () => {
     
     if(currentTipsDetail !== tipsState) {
       dispatch(fetchUpdateTips(tipsState));
+      setSnackOpen(true);
     }
 
   }
@@ -146,7 +150,12 @@ const TipsEdit = () => {
         </Grid>
       </Grid>
 
-      <Box className='section-wrapper'>
+      { isLoading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <CircularProgress />
+      </Box>
+      ) : (
+        <Box className='section-wrapper'>
 
           <form method='POST' onSubmit={e => {handleSubmit(e, tipsState)}}>
             <TableContainer component={Paper}>
@@ -244,6 +253,17 @@ const TipsEdit = () => {
             </Box>
           </form>
         </Box>
+      )}
+
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackOpen(false)}
+      >
+        <Alert onClose={() => setSnackOpen(false)} severity="success" variant='filled' sx={{ width: '100%' }}>
+          Tipsを更新しました
+        </Alert>
+      </Snackbar>
 
     </Container>
   )

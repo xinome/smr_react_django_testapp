@@ -11,10 +11,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-// import { category_project, category_portfolio, category_activity } from '../utils/ColorUtils'
-// import store from '../../store'
-
-// import { fetchMypageAccountList } from '../../features/mypage/mypageSlice'
 import { fetchGetMypageProfile, fetchUpdateMypageProfile } from '../../features/mypage/mypageProfileSlice'
 
 const EditProfile = (props) => {

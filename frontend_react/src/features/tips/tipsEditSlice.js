@@ -9,9 +9,29 @@ const initialState = {
 const BASE_API_URL = "http://localhost:8000/api";
 
 /** データ取得非同期処理 */
+
+// 作成処理
+export const fetchCreateTips = createAsyncThunk(
+  "create_tips",  // type: 内部処理名
+  async (data) => {
+    console.log("data: ", data);
+    const connect_url = `${BASE_API_URL}/tips/create/`;
+    console.log("connect_url: ", connect_url);
+
+    try {
+      const response = await axios.post(connect_url, data);
+      console.log("createTips: ", response);
+      return response.data;
+    }
+    catch (error) {
+      console.log("createTips_error: ", error);
+    }
+  }
+);
+
 // 編集前のデータ取得
 export const fetchGetTipsToEdit = createAsyncThunk(
-  "tips_list",  // type: 内部処理名、一意でないとだめ
+  "tips_list",  // type: 内部処理名
   async (params) => {
     console.log("params: ", params);
     const connect_url = `${BASE_API_URL}/tips/update/${params.tips_id}`;
@@ -24,7 +44,7 @@ export const fetchGetTipsToEdit = createAsyncThunk(
 
 // 更新処理
 export const fetchUpdateTips = createAsyncThunk(
-  "update_tips_list",  // type: 内部処理名、一意でないとだめ
+  "update_tips_list",  // type: 内部処理名
   async (data) => {
 
     const tips_id = data.id;
@@ -43,6 +63,19 @@ export const fetchUpdateTips = createAsyncThunk(
   }
 );
 
+// 削除処理
+export const fetchDeleteTips = createAsyncThunk(
+  "delete_tips_list",  // type: 内部処理名
+  async (params) => {
+    console.log("params: ", params);
+    const connect_url = `${BASE_API_URL}/tips/delete/${params.tips_id}`;
+    console.log("connect_url: ", connect_url);
+
+    const response = await axios.post(connect_url);
+    return response.data;
+  }
+);
+
 // Slices
 export const tipsDetailSlice = createSlice({
   name: "tips_detail",  // sliceの名前
@@ -55,6 +88,29 @@ export const tipsDetailSlice = createSlice({
   // 外部からのデータ取得
   extraReducers: (builder) => {
     // TODO: エラー発生時の処理も追加する
+    builder
+      .addCase(fetchCreateTips.pending, (state) => {
+        console.log("pending..");
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(fetchCreateTips.fulfilled, (state, action) => {
+        console.log("fulfilled: ", action.payload);
+        return {
+          ...state,
+          isLoading: false,
+        };
+      })
+      .addCase(fetchCreateTips.rejected, (state) => {
+        console.log("rejected..");
+        return {
+          ...state,
+          isLoading: false,
+        };
+      });
+
     builder
       .addCase(fetchGetTipsToEdit.pending, (state) => {
         console.log("pending..");
@@ -72,6 +128,52 @@ export const tipsDetailSlice = createSlice({
         };
       })
       .addCase(fetchGetTipsToEdit.rejected, (state) => {
+        console.log("rejected..");
+        return {
+          ...state,
+          isLoading: false,
+        };
+      });
+
+    builder
+      .addCase(fetchUpdateTips.pending, (state) => {
+        console.log("pending..");
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(fetchUpdateTips.fulfilled, (state, action) => {
+        console.log("fulfilled: ", action.payload);
+        return {
+          ...state,
+          isLoading: false,
+        };
+      })
+      .addCase(fetchUpdateTips.rejected, (state) => {
+        console.log("rejected..");
+        return {
+          ...state,
+          isLoading: false,
+        };
+      });
+
+    builder
+      .addCase(fetchDeleteTips.pending, (state) => {
+        console.log("pending..");
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(fetchDeleteTips.fulfilled, (state, action) => {
+        console.log("fulfilled: ", action.payload);
+        return {
+          ...state,
+          isLoading: false,
+        };
+      })
+      .addCase(fetchDeleteTips.rejected, (state) => {
         console.log("rejected..");
         return {
           ...state,
