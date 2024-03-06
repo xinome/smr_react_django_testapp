@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: false,
   items: [],
+  status: "",
 };
 
 const BASE_API_URL = "http://localhost:8000/api";
@@ -77,7 +78,7 @@ export const fetchDeleteTips = createAsyncThunk(
 );
 
 // Slices
-export const tipsDetailSlice = createSlice({
+export const tipsEditSlice = createSlice({
   name: "tips_detail",  // sliceの名前
   initialState: initialState,
   reducers: {
@@ -94,6 +95,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchCreateTips.fulfilled, (state, action) => {
@@ -101,6 +103,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchCreateTips.rejected, (state) => {
@@ -108,6 +111,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -117,6 +121,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchGetTipsToEdit.fulfilled, (state, action) => {
@@ -125,6 +130,7 @@ export const tipsDetailSlice = createSlice({
           ...state,
           items: action.payload,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchGetTipsToEdit.rejected, (state) => {
@@ -132,6 +138,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -141,6 +148,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchUpdateTips.fulfilled, (state, action) => {
@@ -148,6 +156,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchUpdateTips.rejected, (state) => {
@@ -155,6 +164,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
 
@@ -164,6 +174,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: true,
+          status: "loading",
         };
       })
       .addCase(fetchDeleteTips.fulfilled, (state, action) => {
@@ -171,6 +182,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "success",
         };
       })
       .addCase(fetchDeleteTips.rejected, (state) => {
@@ -178,6 +190,7 @@ export const tipsDetailSlice = createSlice({
         return {
           ...state,
           isLoading: false,
+          status: "failed",
         };
       });
   },
@@ -185,4 +198,4 @@ export const tipsDetailSlice = createSlice({
 
 // 各コンポーネントからstateを参照できるようにエクスポートをしておく
 // export const { getAccountList, updateAccountList } = mypageSlice.actions;
-export default tipsDetailSlice.reducer;
+export default tipsEditSlice.reducer;

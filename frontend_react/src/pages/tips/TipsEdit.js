@@ -13,9 +13,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
-import { styled } from '@mui/system';
-
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import CircularProgress from '@mui/material/CircularProgress';
 import Snackbar from '@mui/material/Snackbar';
@@ -33,6 +30,8 @@ const TipsEdit = () => {
   const currentTipsDetail = useSelector((state) => state.tipsDetailReducer.items);
   const isLoading = useSelector((state) => state.tipsDetailReducer.isLoading);
   const categoryList = useSelector((state) => state.tipsCategoryListReducer.items);
+
+  const tipsEditState = useSelector((state) => state.tipsEditReducer);
 
   const dispatch = useDispatch();
 
@@ -65,7 +64,10 @@ const TipsEdit = () => {
     
     if(currentTipsDetail !== tipsState) {
       dispatch(fetchUpdateTips(tipsState));
-      setSnackOpen(true);
+
+      if(tipsEditState.status === 'success') {
+        setSnackOpen(true);
+      }
     }
 
   }
@@ -107,21 +109,7 @@ const TipsEdit = () => {
     { name: 'ホーム', href: '/dashboard/' },
     { name: '開発Tips', href: '/tips/' },
     { name: '編集' },
-  ];    
-
-  // TestareaのみBase UIを使用
-  const Textarea = styled(BaseTextareaAutosize)(
-    ({ theme }) => `
-      box-sizing: border-box;
-      width: 320px;
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 400;
-      line-height: 1.5;
-      padding: 8px 12px;
-      border-radius: 8px;
-    `,
-  );
+  ];
 
   return (
     <Container className='page-maincontents'>
@@ -231,13 +219,13 @@ const TipsEdit = () => {
                       文面
                     </TableCell>
                     <TableCell align="right">
-                      <Textarea
-                        className="CustomTextareaIntrocudtion"
-                        aria-label="empty textarea"
-                        placeholder="Empty"
+                      <TextField
+                        id="outlined-multiline-static"
+                        multiline
+                        minRows={4}
+                        sx={{ minWidth: '100%' }}
                         value={tipsState.content}
                         onChange={e => setTipsState({...tipsState, content: e.target.value})}
-                        sx={{ minWidth: '100%' }}
                       />
                     </TableCell>
                   </TableRow>
