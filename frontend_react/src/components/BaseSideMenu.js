@@ -29,13 +29,6 @@ const BaseSideMenu = (props) => {
   return (
     <Box className='side-menu' style={{ backgroundColor: bgcolor_sidemenu }}>
       <List>
-        {/* <li>
-          ポートフォリオ
-          <ul>
-            <li>ポートフォリオ一覧</li>
-            <li>ポートフォリオ作成</li>
-          </ul>
-        </li> */}
 
         <ListItemButton sx={menuItemStyle}
           onClick={() => setOpenFlg({ ...openFlg, portfolio: !openFlg["portfolio"]})}

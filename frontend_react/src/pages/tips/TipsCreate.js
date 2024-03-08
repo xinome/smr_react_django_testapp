@@ -44,8 +44,7 @@ const TipsCreate = () => {
   const [snackOpen, setSnackOpen] = useState(false);
 
   useEffect(() => {
-    // 並列にされる
-    // dispatch(fetchGetTipsToEdit(params));
+    // カテゴリーリストを取得
     dispatch(fetchCategoryList());
 
     console.log("categoryList: ", categoryList);

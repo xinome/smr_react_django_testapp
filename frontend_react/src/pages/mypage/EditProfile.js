@@ -23,8 +23,6 @@ const EditProfile = (props) => {
     { name: 'プロフィール変更' },
   ];
 
-  // console.log("store: ", store.getState());
-  
   const currentUserList = useSelector((state) => state.mypageProfileReducer.items);
   const isLoading = useSelector((state) => state.mypageProfileReducer.isLoading);
   const dispatch = useDispatch();
@@ -90,11 +88,6 @@ const EditProfile = (props) => {
         </Box>
       ) : (
         <Box className='section-wrapper'>
-          {/* <Grid container className='section-header'>
-            <Grid item className='section-title'>
-              ユーザープロフィール
-            </Grid>
-          </Grid> */}
 
           <form method='POST' onSubmit={e => {handleSubmit(e, userList)}}>
             <TableContainer component={Paper}>

@@ -112,18 +112,6 @@ const TipsCategorize = () => {
 
         {tipsList.length !== 0 && !isLoading ? (
           <Box className='section-contents'>
-            {/* <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl>
-            <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl>
-            <dl>
-              <dt>2022.10.01</dt>
-              <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-            </dl> */}
 
             {/* オブジェクトの入れ子は取得前にレンダリングされる可能性があるため、?(オプショナルチェーン)を使用 */}
             {Object.keys(tipsList).map((key) => (

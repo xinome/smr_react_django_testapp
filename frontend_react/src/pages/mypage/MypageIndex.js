@@ -123,10 +123,6 @@ const MypageIndex = (props) => {
               </Grid>
             </Grid>
 
-            {/* <Box className='section-contents'>
-              説明が入ります。説明が入ります。説明が入ります。説明が入ります。説明が入ります。説明が入ります。説明が入ります。説明が入ります。説明が入ります。
-              説明が入ります。説明が入ります。説明が入ります。説明が入ります。
-            </Box> */}
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 {/* <TableHead>

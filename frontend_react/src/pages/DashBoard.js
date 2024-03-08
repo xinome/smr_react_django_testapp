@@ -65,18 +65,6 @@ const DashBoard = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-          </dl> */}
           {filteredProjectList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
@@ -99,18 +87,6 @@ const DashBoard = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.05</dt>
-            <dd>「ポートフォリオ1」html / css / wordpress</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.05</dt>
-            <dd>「ポートフォリオ2」php / laravel / docker</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.05</dt>
-            <dd>「ポートフォリオ3」vue.js / vuetify / node.js / bootstrap</dd>
-          </dl> */}
           {filteredPortfolioList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>
@@ -128,18 +104,6 @@ const DashBoard = () => {
           </Grid>
         </Grid>
         <Box className='section-contents'>
-          {/* <dl>
-            <dt>2022.10.01</dt>
-            <dd>[プロジェクト]「プロジェクト名1」デプロイされました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.05</dt>
-            <dd>[ポートフォリオ]「ポートフォリオ名2」いいねがつきました。</dd>
-          </dl>
-          <dl>
-            <dt>2022.10.11</dt>
-            <dd>[スカウト]「社名3」からメッセージが届きました。</dd>
-          </dl> */}
           {filteredActivityList.map((item) => (
             <dl key={item.id}>
               <dt>{item.date}</dt>

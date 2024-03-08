@@ -93,18 +93,6 @@ const TipsList = () => {
               </Grid>
             </Grid>
             <Box className='section-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl> */}
               {Object.keys(tipsList).filter(
                 (key) => tipsList[key].category?.id === 1
               ).map((key) => (
@@ -131,18 +119,6 @@ const TipsList = () => {
               </Grid>
             </Grid>
             <Box className='section-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl> */}
               {Object.keys(tipsList).filter(
                 (key) => tipsList[key].category?.id === 2
               ).map((key) => (
@@ -169,18 +145,6 @@ const TipsList = () => {
               </Grid>
             </Grid>
             <Box className='section-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl> */}
               {Object.keys(tipsList).filter(
                 (key) => tipsList[key].category?.id === 3
               ).map((key) => (
@@ -207,18 +171,6 @@ const TipsList = () => {
               </Grid>
             </Grid>
             <Box className='section-contents'>
-              {/* <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl>
-              <dl>
-                <dt>2022.10.01</dt>
-                <dd>[プロジェクト]「プロジェクト名」デプロイされました。</dd>
-              </dl> */}
               {Object.keys(tipsList).filter(
                 (key) => tipsList[key].category?.id === 4
               ).map((key) => (
