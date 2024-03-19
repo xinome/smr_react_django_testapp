@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import Axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 
 import { Box, Grid, Avatar } from '@mui/material';
@@ -8,14 +8,17 @@ import { deepPurple } from '@mui/material/colors';
 
 import { bgcolor_header } from '../utils/ColorUtils';
 
-import { fetchAuth } from '../features/account/authSlice';
+import { fetchAuth, accountLogout } from '../features/account/authSlice';
 
 const BaseHeader = (props) => {
 
   const user_id = props.user_id;
 
+  const userAuth = useSelector((state) => state.authReducer);
   const usersList = useSelector((state) => state.authReducer.items);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   // JSONデータを取得する
   // const [usersList, setUsersList] = useState([]);
@@ -39,9 +42,18 @@ const BaseHeader = (props) => {
 
   useEffect(() => {
     dispatch(fetchAuth(user_id));
-  }, [dispatch, user_id]);
+  }, []);
 
-  console.log("usersList: ", usersList);
+  // console.log("usersList: ", usersList);
+
+  useEffect(() => {
+    console.log("userAuth: ", userAuth);
+
+    // ログアウト処理: リダイレクト
+    // if(!userAuth.isLoggedIn) {
+    //   navigate('/login/');
+    // }
+  }, [userAuth]);
 
   const stringAvater = (name) => {
     return {
@@ -51,6 +63,11 @@ const BaseHeader = (props) => {
       // children: name ? `${name.split(' ')[0][0]}${name.split(' ')[1][0]}` : '',
       children: name ? name.slice(0, 1) : '',
     };
+  }
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(accountLogout());    
   }
 
   return (
@@ -71,7 +88,7 @@ const BaseHeader = (props) => {
           <Link to='/password/'>パスワード変更</Link>
         </Grid>
         <Grid item className='header-menu-item' sx={{ marginLeft: '1em' }}>
-          <Link to='/logout/'>ログアウト</Link>
+          <span onClick={handleLogout}>ログアウト</span>
         </Grid>
       </Grid>
     </header>
