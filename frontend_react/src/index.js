@@ -8,24 +8,13 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom'
 
-import Login from './pages/Login';
-
-const isLoggedIn = store.getState().authReducer.isLoggedIn;
-console.log("state: ", store.getState());
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* ログイン、非ログインで切り分け */}
-      {/* {isLoggedIn ? ( */}
-        <BrowserRouter>
-          <BaseApp />
-        </BrowserRouter>
-      {/* ) : (
-        <Login />
-        // <p>ログインしてください</p>
-      )} */}
+      <BrowserRouter>
+        <BaseApp />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

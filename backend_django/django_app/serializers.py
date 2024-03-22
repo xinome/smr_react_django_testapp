@@ -13,11 +13,13 @@ Base: 全ページ共通のシリアライザー
 """
 
 # Base: ログインアカウント
+# TODO: 後に改修する
 class AuthAccountSerializer(serializers.ModelSerializer):
   class Meta:
     model = MypageUserProfile
-    fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone')
-
+    # fields = ('id', 'name', 'account_id', 'password', 'email', 'zip', 'address', 'phone')
+    # email. passwordのみを指定する
+    fields = ('email', 'password')
 
 
 """

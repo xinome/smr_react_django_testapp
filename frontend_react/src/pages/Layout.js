@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 
 // Material UI(MUI) components
 import { Avatar, Box, Container, Grid } from '@mui/material';
+
+import { fetchAuth, accountLogout } from '../features/account/authSlice';
 
 // レイアウト
 import BaseHeader from "../components/BaseHeader";
@@ -10,24 +13,26 @@ import BaseSideMenu from "../components/BaseSideMenu";
 
 const Layout = () => {
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const isLoggedIn = true;
-  console.log("isLoggedIn: ", isLoggedIn);
-  
 
   const pathname = useLocation().pathname.replaceAll('/', '');
   console.log("useLocation.pathname: ", pathname);
 
-  // 仮置き: ログインユーザID
-  const current_user_id = 1;
+  // ローカルストレージからアクセストークンを取得
+  const access_token = localStorage.getItem('access_token');
+  const current_user_id = localStorage.getItem('current_user_id');
 
-  // ログイン状態をチェックして、ログインしていない場合はログインページにリダイレクト
   useEffect(() => {
-    if (!isLoggedIn) {
+    dispatch(fetchAuth(current_user_id));
+  }, []);
+
+  useEffect(() => {
+    // ログアウト処理: リダイレクト
+    if(!access_token) {
       navigate('/login/');
     }
-  }, []);
+  }, [access_token]);
 
   return (
     <div className="app">

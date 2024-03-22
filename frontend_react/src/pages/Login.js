@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { TextField, TableContainer, Table, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 
 import '../BaseApp.css';
@@ -8,17 +9,30 @@ import { accountLogin, accountLogout } from '../features/account/authSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const access_token = localStorage.getItem('access_token');
 
   const [loginAccount, setLoginAccount] = useState({
     email: '',
     password: '',
   });
 
+  useEffect(() => {
+    if (access_token) {
+      navigate('/dashboard/');
+    }
+  }, [access_token]);
+
   const handleSubmit = (e, loginAccount) => {
     e.preventDefault();
     
-    console.log('loginAccount: ', loginAccount);
     dispatch(accountLogin(loginAccount));
+
+    // ログイン成功時のリダイレクト
+    if (access_token) {
+      navigate('/dashboard/');
+    }
   };
   
   return (

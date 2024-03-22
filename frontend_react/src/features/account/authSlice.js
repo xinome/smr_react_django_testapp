@@ -25,9 +25,18 @@ export const fetchAuth = createAsyncThunk(
 export const accountLogin = createAsyncThunk(
   "account/login",
   async (data) => {
-    const response = await axios.post(`${BASE_API_URL}/auth_account/login`, data);
-    console.log("login: ", response);
-    return response.data;
+    const response = await axios.post(`${BASE_API_URL}/auth_account/login/`, data);
+    console.log("response.data: ", response.data);
+
+    // ログイン成功時の処理: ローカルストレージにアクセストークンを保存
+    if (response.data.access) {
+      localStorage.setItem('access_token', response.data.access);
+      localStorage.setItem('current_user_id', response.data.user.id);
+      return response.data;
+    } else {
+      // handle error
+      console.log("error: ", response.data);
+    }
   }
 );
 
@@ -35,8 +44,12 @@ export const accountLogin = createAsyncThunk(
 export const accountLogout = createAsyncThunk(
   "account/logout",
   async () => {
-    const response = await axios.post(`${BASE_API_URL}/auth_account/logout`);
+    const response = await axios.post(`${BASE_API_URL}/auth_account/logout/`);
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('current_user_id');
     console.log("logout: ", response);
+    console.log("localStorage: ", localStorage);
+
     return response.data;
   }
 );
@@ -95,6 +108,7 @@ export const authSlice = createSlice({
           items: action.payload,
           isLoading: false,
           isLoggedIn: true,
+          access_token: action.payload.access,
         };
       })
       .addCase(accountLogin.rejected, (state) => {

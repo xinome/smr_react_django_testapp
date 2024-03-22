@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import Axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, Grid, Avatar } from '@mui/material';
 import { deepPurple } from '@mui/material/colors';
@@ -16,44 +16,9 @@ const BaseHeader = (props) => {
 
   const userAuth = useSelector((state) => state.authReducer);
   const usersList = useSelector((state) => state.authReducer.items);
+
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
-  // JSONデータを取得する
-  // const [usersList, setUsersList] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchUsersList = async (id) => {
-  //     try {
-  //       const response = await Axios.get(`${BASE_API_URL}/users/${id}`);
-  //       console.log("fetchUsersList: ", response);
-  //       setUsersList(response.data);
-  //       console.log("fetchUsersList > usersList: ", usersList);
-
-  //     }
-  //     catch (error) {
-  //       console.log("fetchUsersList: ", error);
-  //     }
-  //   }
-
-  //   fetchUsersList(user_id);
-  // }, [user_id]);
-
-  useEffect(() => {
-    dispatch(fetchAuth(user_id));
-  }, []);
-
-  // console.log("usersList: ", usersList);
-
-  useEffect(() => {
-    console.log("userAuth: ", userAuth);
-
-    // ログアウト処理: リダイレクト
-    // if(!userAuth.isLoggedIn) {
-    //   navigate('/login/');
-    // }
-  }, [userAuth]);
 
   const stringAvater = (name) => {
     return {
@@ -67,7 +32,14 @@ const BaseHeader = (props) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    dispatch(accountLogout());    
+    dispatch(accountLogout());
+
+    // ログアウト成功時のリダイレクト
+    const access_token = localStorage.getItem('access_token');
+    console.log('access_token: ', access_token);
+    if (!access_token) {
+      navigate('/login/');
+    }
   }
 
   return (
