@@ -1,0 +1,5 @@
+# Python関連
+__pycache__/
+
+# データベースファイル
+*.sqlite3
