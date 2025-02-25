@@ -1,5 +1,6 @@
 # Python関連
 __pycache__/
+*.py[cod]
 
 # データベースファイル
 *.sqlite3
