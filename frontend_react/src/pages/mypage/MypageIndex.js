@@ -195,7 +195,7 @@ const MypageIndex = (props) => {
 
             <Box className='section-footer'>
               <Button variant="contained" color="primary">
-                <Link to='/mypage/edit_profile/'>プロフィール変更</Link>
+                <Link className="buttonLink" to='/mypage/edit_profile/'>プロフィール変更</Link>
               </Button>
             </Box>
           </Box>

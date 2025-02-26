@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TextField, TableContainer, Table, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 
-import '../BaseApp.css';
+import '../BaseApp.scss';
 
 import { accountLogin, accountLogout } from '../features/account/authSlice';
 

@@ -6,7 +6,7 @@ import { bgcolor_sidemenu, bgcolor_sidemenu_active } from '../utils/ColorUtils';
 import { List, ListItemButton, ListItemText, Collapse } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-import '../BaseApp.css';
+import '../BaseApp.scss';
 
 const BaseSideMenu = (props) => {
 

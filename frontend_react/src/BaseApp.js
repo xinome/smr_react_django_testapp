@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import store from "./store";
 import { useSelector, useDispatch } from 'react-redux';
 
-import './BaseApp.css';
+import './BaseApp.scss';
 import { Routes, Route, Link } from 'react-router-dom';
 
 // import { fetchAuth, accountLogout } from './features/account/authSlice';

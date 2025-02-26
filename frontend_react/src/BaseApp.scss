@@ -171,3 +171,9 @@ span.tag_category {
   align-items: center;
 }
 
+.buttonLink {
+  color: #fff;
+  &:hover {
+    text-decoration: none;
+  }
+}
