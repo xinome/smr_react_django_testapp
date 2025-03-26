@@ -10,7 +10,7 @@ services:
       MYSQL_PASSWORD: mypassword
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
+    # restart: always
 
   web:
     build: ./nginx
